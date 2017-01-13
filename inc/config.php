@@ -1,7 +1,5 @@
 <?php
-    if(!isset($_SESSION)) {
-        session_start();
-    }
+
     
     defined("COUNTRY_LOCAL")
         || define("COUNTRY_LOCAL", 229);
@@ -19,8 +17,7 @@
     // $_SERVER['SERVER_NAME'] tra ve ten mien cua website
     //define constant de co the dung bat cu dau
     
-    defined("DS")
-        || define("DS", DIRECTORY_SEPARATOR);
+
     //dau phan cach duong dan trong he dieu hanh window la dau \, vi du nhw C:\program file, con trong Linus va Mac la dau "/"
     //directory separator co vai tro tim xem dau phan cach duong dan la dau gi
     //tim duoc roi thi gan cho DS
@@ -32,7 +29,7 @@
     //ket qua la quay ve thu muc goc
     
     defined("CLASSES_DIR")
-        || define("CLASSES_DIR", "classes");
+        || define("CLASSES_DIR", "library");
     //ten folder classes
     
     defined("CLASSES_PATH")
@@ -55,20 +52,58 @@
         
     defined("EMAILS_DIR")
         || define("EMAILS_DIR", ROOT_PATH . DS . "emails");
-        
+    
+    defined("CATALOGUE_DIR")
+        || define("CATALOGUE_DIR", "media" . DS . "catalogue");
+    
     defined("CATALOGUE_PATH")
-        || define("CATALOGUE_PATH", ROOT_PATH . DS . "media" . DS . "catalogue");
+        || define("CATALOGUE_PATH", ROOT_PATH . DS . CATALOG_DIR);
+
+//SMTP
+
+
+    defined("SMTP_USE")
+        || define("SMTP_USE", false);  
+    
+    defined("SMTP_HOST")
+        || define("SMTP_HOST", '');
+    
+    defined("SMTP_USERNAME")
+        || define("SMTP_USERNAME", '');
+        
+    defined("SMTP_PASSWORD")
+        || define("SMTP_PASSWORD", '');
+        
+    defined("SMTP_PORT")
+        || define("CATALOGUE_PATH", '');
+        
+    defined("SMTP_SSL")
+        || define("SMTP_SSL", '');
+        
+    
+//DATABASE
+
+    defined("DB_HOST")
+        || define("DB_HOST", 'localhost:8080');
+        
+    defined("DB_NAME")
+        || define("DB_NAME", '');
+    
+    defined("DB_USER")
+        || define("DB_USER", '');
+        
+    defined("DB_PASS")
+        || define("DB_PASS", '');
+        
         
     set_include_path(implode(PATH_SEPARATOR, array(
     //them tat ca cac duong dan o tren vao include path
-        realpath(ROOT_PATH . DS . MODULE_DIR),
         realpath(ROOT_PATH . DS . INC_DIR),
+        realpath(CLASSES_PATH),
         get_include_path()
     )));
     
-    require_once(CLASSES_PATH.DS.'autoloader.php');
-    
-    spl_autoload_register(array('autoloader', 'load'));
+
     //ten class la autloader, method la load
     
 ?>
