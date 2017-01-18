@@ -1,4 +1,7 @@
 <?php
+
+    namespace SSD;
+
     class URL {
         public $key_page = 'page';
         public $key_modules = array('panel');
@@ -12,10 +15,10 @@
         public $stringRaw;
         
         public function __construct() {
-            $this->process();
+            $this->_process();
         }
         
-        public function process() {
+        private function _process() {
             $uri = $_SERVER['REQUEST_URI'];
             if(!empty($uri)) {
                 $uriQ = explode('?', $uri); 

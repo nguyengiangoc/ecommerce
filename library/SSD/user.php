@@ -1,32 +1,53 @@
 <?php
     
+    namespace SSD;
+    
     class User extends Application {
         
         public $objURL;
-        private $_table = "clients";
+        protected $_table = "clients";
         public $id;
+
         
         public function __construct($objURL = null) {
             parent::__construct();
             $this->objURL = is_object($objURL) ? $objURL : new URL();
         }
         
-        public function isUser($email, $password) {
-            $password = Login::string2Hash($password);
-            $sql = "SELECT * FROM {$this->_table} WHERE email = '" . $this->db->escape($email) . "' AND password = '" . $this->db->escape($password) . "'";
-            $result = $this->db->fetchOne($sql);
-            if (!empty($result)) {
-                $this->_id = $result['id'];
-                return true;
+        private function _isEmailPasswordEmpty($email, $password) {
+            return (!empty($email) || !empty($password));
+        }
+        
+        public function isUser($email = null, $password = null) {
+            if(!$this->_isEmailPasswordEmpty($email, $password)) {
+                
+                $password = Login::string2Hash($password);
+                $sql = "SELECT * FROM {$this->_table} WHERE `email` = ? AND `password` = ? And `active` = ?";
+                $result = $this->_Db->fetchOne($sql, array($email, $password, 1));
+                
+                if (!empty($result)) {
+                    
+                    $this->_id = $result['id'];
+                    return true;
+                    
+                }
+                
+                return false;
+                
             }
+            
             return false;
+            
         
         }
         
+        private function _areAddUserParamsValid($params = null, $password = null) {
+            return (!empty($params) && !empty($password));
+        }
+        
         public function addUser($params = null, $password = null) {
-            if(!empty($params) && !empty($password)) {
-                $this->db->prepareInsert($params);
-                $this->db->insert($this->_table);
+            if(!$this->_areAddUserParamsValid($params, $password) && $this->insert($params)) {
+
                 $link = "<a href=\"".SITE_URL."/".$this->objURL->href('activate', array('code', $params['hash']))."\">Activation link</a>";
                 return $link;
                 
@@ -50,59 +71,55 @@
         }
         
         public function getUserByHash($hash = null) {
-            if(!empty($hash)) {
-                $sql = "SELECT * FROM {$this->_table} WHERE hash = '".$this->db->escape($hash)."'";
-                return $this->db->fetchOne($sql);
-            }
+            
+            return $this->getOne($hash, 'hash');
+
         }
         
         public function makeActive($id = null) {
-            if(!empty($id)) {
-                $sql = "UPDATE {$this->_table} SET active = 1 WHERE id = '".$this->db->escape($id)."'";
-                return $this->db->query($sql);
-            }
+            
+            return $this->update(array('active' => 1), $id);
+            
         }
         
         public function getByEmail($email = null) {
-            if(!empty($email)) {
-                $sql = "SELECT * FROM {$this->_table} WHERE email = '".$this->db->escape($email)."' AND active = 1";
-                return $this->db->fetchOne($sql);
-            }
+            
+            return $this->getOne($email, 'email');
+            
         }
         
         public function getUser($id = null) {
-            if(!empty($id)) {
-                $sql = "SELECT * FROM {$this->_table} WHERE id = '".$this->db->escape($id)."'";
-                return $this->db->fetchOne($sql);
-            }
+            
+            return $this->getOne($id);
+            
         }
         
         public function updateUser($array = null, $id = null) {
-            if(!empty($array) && !empty($id)) {
-                $this->db->prepareUpdate($array);
-                if($this->db->update($this->_table, $id)) {
-                    return true;
-                }
-                return false;
-            }
+            
+            return $this->update($array, $id);
+            
         }
         
-        	public function getUsers($srch = null) {
-                $sql = "SELECT * FROM `{$this->_table}` WHERE `active` = 1";
-                if (!empty($srch)) {
-                    $srch = $this->db->escape($srch);
-                    $sql .= " AND (`first_name` LIKE '%{$srch}%' || `last_name` LIKE '%{$srch}%')";
-                }
-                $sql .= " ORDER BY `last_name`, `first_name` ASC";
-                return $this->db->fetchAll($sql);
+    	public function getUsers($srch = null) {
+    	   
+            $array = array(1);
+            $sql = "SELECT * FROM `{$this->_table}` WHERE `active` = ?";
+            if (!empty($srch)) {
+
+                $sql .= " AND (`first_name` LIKE ? || `last_name` LIKE ? )";
+                $array[] = "%{$srch}%";
+                $array[] = "%{$srch}%";
+                
             }
+            $sql .= " ORDER BY `last_name`, `first_name` ASC";
+            return $this->_Db->fetchAll($sql, $array);
+        }
+        
+        public function removeUser($id = null) {
             
-            public function removeUser($id = null) {
-                if (!empty($id)) {
-                    $sql = "DELETE FROM `{$this->_table}` WHERE `id` = '".$this->db->escape($id)."'";
-                    return $this->db->query($sql);
-                }
-            }
+            return $this->delete($id);
+            
+        }
     }
 
 ?>

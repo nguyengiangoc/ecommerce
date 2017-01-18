@@ -1,4 +1,7 @@
 <?php
+
+    namespace SSD;
+
     class PayPal {
         public $objURL;
         private $_environment = 'sandbox';
@@ -15,13 +18,13 @@
         private $_cancel_payment;
         private $_notify_url;
         private $_currency_code = 'GBP';
-        public $_tax_cart = 0;
-        public $_tax = 0;
-        public $_shipping = 0;
+        public $tax_cart = 0;
+        public $tax = 0;
+        public $shipping = 0;
         
         
         //pre-populate check out pages, can phai dien het cac muc can dien, neu khong se khong hoat dong
-        public $_populate = array();
+        public $populate = array();
         private $_ipn_data = array();
         private $_log_file = null;
         private $_ipn_result;
@@ -103,27 +106,27 @@
             $this->addField('cancel_payment', $this->_cancel_payment);
             $this->addField('currency_code', $this->_currency_code);
             $this->addField('rm', 2); //neu la 2 thi cach gui du lieu se la POST
-            if(!empty($this->_shipping)) {
-                $this->addField('handling_cart', $this->_shipping);
+            if(!empty($this->shipping)) {
+                $this->addField('handling_cart', $this->shipping);
             }
             switch($this->_cmd) {
                 case '_cart':
-                if($this->_tax_cart != 0) {
-                    $this->addField('tax_cart', $this->_tax_cart);
+                if($this->tax_cart != 0) {
+                    $this->addField('tax_cart', $this->tax_cart);
                 }
                 $this->addField('upload', 1);
                 break;
                 case '_xclick':
-                if($this->_tax_cart != 0) {
-                    $this->addField('tax', $this->_tax);
+                if($this->tax != 0) {
+                    $this->addField('tax', $this->tax);
                 }
                 break;
             }
         }
         
         private function prePopulate() {
-            if(!empty($this->_populate)) {
-                foreach($this->_populate as $key => $value) {
+            if(!empty($this->populate)) {
+                foreach($this->populate as $key => $value) {
                     $this->addField($key, $value);
                 }
             }

@@ -1,15 +1,18 @@
 <?php
+    
+    namespace SSD;
+
     class Upload {
-        public $_files = array();
-        public $_overwrite = false;
-        public $_errors = array();
-        public $_names = array();
+        private $_files = array();
+        public $overwrite = false;
+        public $errors = array();
+        public $names = array();
         
         public function __construct() {
-            $this->getUploads();
+            $this->_getUploads();
         }
         
-        public function getUploads() {
+        private function getUploads() {
             if(!empty($_FILES)) {
                 foreach($_FILES as $key => $value) {
                     $this->_files[$key] = $value;
@@ -22,16 +25,16 @@
             if(!empty($path) && is_dir($path) && !empty($this->_files)) {
                 foreach($this->_files as $key => $value) {
                     $name = Helper::cleanString($value['name']);
-                    if($this->_overwrite == false && is_file($path.DS.$name)) {
+                    if($this->overwrite == false && is_file($path.DS.$name)) {
                         $prefix = date('YmdHis', time());
                         $name = $prefix."-".$name;
                     }
                     if(!move_uploaded_file($value['tmp_name'], $path.DS.$name)) {
-                        $this->_errors[] = $key;
+                        $this->errors[] = $key;
                     }
-                    $this->_names[] = $name;
+                    $this->names[] = $name;
                 }
-                return empty($this->_errors) ? true : false;
+                return empty($this->errors) ? true : false;
             }
             return false;
         }

@@ -1,29 +1,45 @@
 <?php
+
+    namespace SSD;
+
     class Admin extends Application {
-        private $_table = 'admins';
-        public $_id;
+        protected $_table = 'admins';
+        public $id;
+        
+        private function _isEmailPasswordEmpty($email, $password) {
+            return (!empty($email) || !empty($password));
+        }
+        
         
         public function isUser($email = null, $password = null) {
-            if(!empty($email) && !empty($password)) {
+            if(!$this->_isEmailPasswordEmpty($email, $password)) {
                 $password = Login::string2Hash($password);
-                $sql = "SELECT * FROM `{$this->_table}` WHERE `email` = '".$this->db->escape($email)."' AND `password` = '".$this->db->escape($password)."'";
-                $result = $this->db->fetchOne($sql);
+                $sql = "SELECT * FROM `{$this->_table}` WHERE `email` = ? AND `password` = ?";
+                $result = $this->_Db->fetchOne($sql, array($email, $password));
                 if(!empty($result)) {
-                    $this->_id = $result['id'];
+                    
+                    $this->id = $result['id'];
                     return true;
                 }
                 return false;
             }
+            return false;
         }
         
         public function getFullNameAdmin($id = null) {
             if(!empty($id)) {
-                $sql = "SELECT *, CONCAT_WS(' ', `first_name`, `last_name`) AS `full_name` FROM `{$this->_table}` WHERE `id` = ".intval($id);
-                $result = $this->db->fetchOne($sql);
+                $sql = "SELECT *, CONCAT_WS(' ', `first_name`, `last_name`) AS `full_name` FROM `{$this->_table}` WHERE `id` = ?";
+                $result = $this->_Db->fetchOne($sql, $id);
                 if(!empty($result)) {
+                    
                     return $result['full_name'];
+                    
                 }
+                
+                return null;
             }
+            
+            return null;
         }
     }
 ?>

@@ -364,6 +364,138 @@
             
         }
         
+        public function beginTransaction() {
+            
+            if(!is_object($this->_pdoObject)) {
+                
+                $this->_connect();
+                
+            }
+            
+            $this->_pdoObject->beginTransaction();
+            
+        }
+        
+        public function commit() {
+            
+            if(!is_object($this->_pdoObject)) {
+                
+                $this->_connect();
+                
+            }
+            
+            $this->_pdoObject->commit();
+        }
+        
+        public function rollBack() {
+            
+            if(!is_object($this->_pdoObject)) {
+                
+                $this->_connect();
+                
+            }
+            
+            $this->_pdoObject->rollBack();
+        }
+        
+        
+        public function executeTransaction($sql = null, $params = null) {
+            
+            //execute transaction doesnt have try catch because there's meant to be more than once execute in a try catch in another place
+            
+            if(!empty($sql)) {
+                
+                return $this->_query($sql, $params);
+                
+            }
+            
+            return false;
+            
+        }
+        
+        public function insertTransaction($table = null, $array = null) {
+            
+            $array = $this->_insertArray($array);
+            
+            if(!empty($table) && !empty($array)) {
+                
+                $sql = "INSERT INTO `{$table}` (";
+                $sql .= implode(", ", $array[0]);
+                $sql .= ") VALUES (";
+                $sql .= implode(", ", $array[1]);
+                $sql .= ")";
+                
+                $return = $this->executeTransaction($sql, $array[2]);
+                
+                if($return) {
+                    $this->id = $this->getLastInsertId();
+                    return true;
+                }
+                
+                return false;
+                
+            }
+            
+            return false;
+            
+        }
+        
+        public function updateTransaction($table = null, $array = null, $value = null, $field = 'id') {
+            
+            $array = $this->_updateArray($array);
+            
+            if($this->_areUpdateParamsValid($table, $array, $value, $field)) {
+                
+                $sql = "UPDATE `{$table}` SET ";
+                $sql .= implode(", ", $array[0]);
+                $sql .= " WHERE `{$field}` = ? ";
+                
+                $array[1][] = $value;
+                
+                $return = $this->executeTransaction($sql, $array[1]);
+                
+            }
+            
+            return false;
+            
+        }
+        
+        public function deleteTransaction($table = null, $value = null, $field = 'id') {
+            
+            if($this->_areDeleteParamsValid($table, $value, $field)) {
+                
+                $sql = "DELETE FROM `{$table}` WHERE `{$field}` = ?";
+                return $this->execute($sql, $value);
+            }
+            
+            return false;
+            
+        }
+        
+        public function getOneTransaction($sql = null, $params = null) {
+            
+            if(!empty($sql)) {
+                
+                $statement = $this->_query($sql, $params);
+                return $statement->fetch($this->_fetchMode);
+                
+            }
+            
+            return null;
+            
+        }
+        
+        public function selectOneTransaction($table = null, $value = null, $field = 'id') {
+            
+            if($this->_isSelectOneValid($table, $value, $field)) {
+                
+                $sql = "SELECT * FROM `{$table}` WHERE `{$field}` = ?";
+                return $this->getOneTransaction($sql, $value);
+            }
+            
+            return null;
+            
+        }
         
     }
 

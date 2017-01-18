@@ -1,12 +1,16 @@
 <?php
 
+    //echo  $_SERVER['REQUEST_URI'];
+
+    
+
     date_default_timezone_set('Europe/London');
     
     if(!isset($_SESSION)) {
         session_start();
     }
     
-    //0 => production, 1 =? development
+    //0 => production, 1 => development
     
     defined('ENVIRONMENT')
         || define('ENVIRONMENT', 1);
@@ -21,12 +25,17 @@
 
     defined("DS")
         || define("DS", DIRECTORY_SEPARATOR);
+   
 
     require_once('inc'.DS.'config.php');
-    
+    require_once('SSD'.DS.'SSDException.php');
     require_once('SSD'.DS.'autoloader.php');
     
+    
+    set_exception_handler(array('SSD\SSDException', 'getOutput'));
     spl_autoload_register(array('SSD\autoloader', 'load'));
+    
+    throw new Exception('message');
     
     use SSD\Core;
     

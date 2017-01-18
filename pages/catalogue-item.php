@@ -19,7 +19,7 @@
             $width = Helper::getImgSize(CATALOGUE_PATH.DS.$image, 0);
             $width = $width > 120 ? 120 : $width;
             echo "<div class=\"fl_l\">";
-            echo "<div class=\"lft\"><img src=\"/ecommerce/media/catalogue/".$image."\" alt=\"";
+            echo "<div class=\"lft\"><img src=\"".BASE_PATH.DS.CATALOGUE_DIR.DS.$image."\" alt=\"";
             echo Helper::encodeHTML($product['name'], 1);
             echo "\" width=\"{$width}\" /></div>";
 

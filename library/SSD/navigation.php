@@ -1,4 +1,7 @@
 <?php
+
+    namespace SSD;
+
     class Navigation {
         public $objURL;
         public $classActive = 'act';

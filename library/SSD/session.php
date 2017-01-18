@@ -1,4 +1,7 @@
 <?php
+
+    namespace SSD;
+
     class Session {
         public static function setItem($id, $qty = 1) {
             $_SESSION['basket'][$id]['qty'] = $qty;

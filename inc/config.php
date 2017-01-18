@@ -1,5 +1,7 @@
 <?php
 
+    defined("BASE_PATH")
+        || define("BASE_PATH", $_SERVER['REQUEST_URI']);
     
     defined("COUNTRY_LOCAL")
         || define("COUNTRY_LOCAL", 229);
@@ -57,7 +59,7 @@
         || define("CATALOGUE_DIR", "media" . DS . "catalogue");
     
     defined("CATALOGUE_PATH")
-        || define("CATALOGUE_PATH", ROOT_PATH . DS . CATALOG_DIR);
+        || define("CATALOGUE_PATH", ROOT_PATH . DS . CATALOGUE_DIR);
 
 //SMTP
 
@@ -75,7 +77,7 @@
         || define("SMTP_PASSWORD", '');
         
     defined("SMTP_PORT")
-        || define("CATALOGUE_PATH", '');
+        || define("SMTP_PORT", '');
         
     defined("SMTP_SSL")
         || define("SMTP_SSL", '');

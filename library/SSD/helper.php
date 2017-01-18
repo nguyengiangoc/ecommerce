@@ -1,4 +1,7 @@
 <?php
+
+    namespace SSD;
+
     class Helper {
         
         /*public static function getActive($page = null) {
@@ -140,5 +143,10 @@
                 }
             }
         }
+        
+        public static function isArrayEmpty($array) {
+            return(empty($array) || !is_array($array));
+        }
+        
     }
 ?>

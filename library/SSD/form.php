@@ -1,4 +1,7 @@
 <?php
+
+    namespace SSD;
+
     class Form {
         
         public function isPost($field = null) {

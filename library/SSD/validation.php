@@ -1,12 +1,15 @@
 <?php
+
+    namespace SSD;
+
     class Validation {
         private $objForm;
         
         private $_errors = array();
         
-        public $_errorsMessages = array();
+        public $errorsMessages = array();
         
-        public $_message = array(
+        public $message = array(
             "first_name" => "Please provide your first name",
             "last_name" => "Please provide your last name",
             "address_1" => "Please provide the first line of your address",
@@ -46,18 +49,18 @@
             "cost" => "Please provide the cost"
         );
         
-        public $_expected = array();
+        public $expected = array();
         //de cho vao nhung~ thanh phan trong form can duoc dem vao xu ly
         
-        public $_required = array();
+        public $required = array();
         
-        public $_special = array();
+        public $special = array();
         
         public $_post = array();
         
-        public $_post_remove = array();
+        public $post_remove = array();
         
-        public $_post_format = array();
+        public $post_format = array();
         
         public function __construct($objForm = null) {
             $this->objForm = is_object($objForm) ? $objForm : new Form();
@@ -66,11 +69,11 @@
         public function process() {
             if($this->objForm->isPost()) {
                 //neu da co cac thanh phan trong array post va trong array required co ten cac field can phai dien
-                $this->_post = !empty($this->_post) ? $this->_post : $this->objForm->getPostArray($this->_expected);
+                $this->post = !empty($this->post) ? $this->post : $this->objForm->getPostArray($this->expected);
                 //chi lay tu array post cac thanh phan co key nam trong array expected 
                 //lay vao trong array post cua objValid
-                if(!empty($this->_post)) {
-                    foreach($this->_post as $key => $value) {
+                if(!empty($this->post)) {
+                    foreach($this->post as $key => $value) {
                     //luc nay da lay xong cac thanh phan trong array post
                         $this->check($key, $value); 
                         //tien hanh kiem tra tung thanh phan trong array post
@@ -84,10 +87,10 @@
         }
         
         public function check($key, $value) {
-            if(!empty($this->_special) && array_key_exists($key, $this->_special)) {
+            if(!empty($this->special) && array_key_exists($key, $this->special)) {
                 $this->checkSpecial($key, $value);
             } else {
-                if(in_array($key, $this->_required) && Helper::isEmpty($value)) {
+                if(in_array($key, $this->required) && Helper::isEmpty($value)) {
                 //neu 
                     $this->add2Errors($key);
                 }
@@ -98,17 +101,17 @@
             if(!empty($key)) {
                 $this->_errors[] = $key; //them vao thanh phan tiep theo, index la so, khong phai co key rieng
                 if(!empty($value)) {
-                    $this->_errorsMessages['valid_'.$key] = $this->wrapWarn($value); 
+                    $this->errorsMessages['valid_'.$key] = $this->wrapWarn($value); 
                     //value dung de tao re validation message rieng khac voi message da co san trong array cua object
-                } elseif (array_key_exists($key, $this->_message)) {
-                    $this->_errorsMessages['valid_'.$key] = $this->wrapWarn($this->_message[$key]);
+                } elseif (array_key_exists($key, $this->message)) {
+                    $this->errorsMessages['valid_'.$key] = $this->wrapWarn($this->message[$key]);
                 }
             }
             
         }
         
         public function checkSpecial($key, $value) {
-            switch($this->_special[$key]) {
+            switch($this->special[$key]) {
                 case('email'):
                 if(!$this->isEmail($value)) {
                     $this->add2Errors($key);
@@ -129,21 +132,21 @@
             //phai cho ham nay chay thi process moi duoc chay
             //sau khi process chay xong thi se dua het error vao trong array error
             if(!empty($array)) {
-                $this->_post = $array;
+                $this->post = $array;
             }
             $this->process();
-            if (empty($this->_errors) && !empty($this->_post)) {
+            if (empty($this->_errors) && !empty($this->post)) {
                 //remove all unwanted fields
-                if(!empty($this->_post_remove)) {
+                if(!empty($this->post_remove)) {
                     //neu co thanh phan nao trong post remove, tuc la thanh phan nay la mot field trong form nhung khi xu ly khong can dung den
                     //thi xoa ra khoi array post
-                    foreach($this->_post_remove as $value) {
-                        unset($this->_post[$value]);
+                    foreach($this->post_remove as $value) {
+                        unset($this->post[$value]);
                     }
                 }
                 //format all required field
-                if(!empty($this->_post_format)) {
-                    foreach($this->_post_format as $key => $value) {
+                if(!empty($this->post_format)) {
+                    foreach($this->post_format as $key => $value) {
                         $this->format($key, $value);
                     }
                 }
@@ -155,14 +158,14 @@
         public function format($key, $value) {
             switch($value) {
                 case 'password':
-                $this->_post[$key] = Login::string2hash($this->_post[$key]);
+                $this->post[$key] = Login::string2hash($this->post[$key]);
                 break;
             }
         }
         
         public function validate($key) {
             if(!empty($this->_errors) && in_array($key, $this->_errors)) {
-                return $this->wrapWarn($this->_message[$key]);
+                return $this->wrapWarn($this->message[$key]);
             }
             //method nay de hien thi loi~ cu the cua mot field
             //duoc goi ra ngay truoc field do trong form

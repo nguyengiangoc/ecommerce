@@ -39,7 +39,7 @@
                             $link = $this->objURL->href('catalogue-item', array('category', $category['identity'], 'item', $row['identity']));
                         ?>
                         <a href="<?php echo $link; ?>"> 
-                        <img src="/ecommerce/media/catalogue/<?php echo $image; ?>" alt="<?php echo Helper::encodeHTML($row['name'], 1); ?>" width="<?php echo $width; ?>" />
+                        <img src="<?php echo BASE_PATH.DS.CATALOGUE_DIR.DS.$image; ?>" alt="<?php echo Helper::encodeHTML($row['name'], 1); ?>" width="<?php echo $width; ?>" />
                         </a>
                     </div>
                     <div class="catalogue_wrapper_right">
