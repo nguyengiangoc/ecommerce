@@ -1,4 +1,8 @@
 <?php
+
+    use SSD\User;
+    use SSD\Helper;
+
     $code = $this->objURL->get('code');
     if(!empty($code)) {
         $objUser = new User();
@@ -14,13 +18,13 @@
                 $mess = "<h1>Account already activated</h1><p>This account has already been activated.</p>";
             }
         } else {
-            Helper::redirect("/ecommerce/".$this->objURl->href('error'));
+            Helper::redirect(BASE_PATH.'/'.$this->objURl->href('error'));
         }
         require_once("_header.php");
         echo $mess;
         require_once("_footer.php");
     } else {
-        Helper::redirect("/ecommerce/".$this->objURl->href('error'));
+        Helper::redirect(BASE_PATH.'/'.$this->objURl->href('error'));
     }
     
 ?>

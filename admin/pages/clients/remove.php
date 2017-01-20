@@ -1,4 +1,10 @@
 <?php
+
+    use SSD\User;
+    use SSD\Helper;
+    use SSD\Order;
+    use SSD\Paging;
+
     $id = $this->objURL->get('id');
     if (!empty($id)) {
         $objUser = new User();
@@ -7,12 +13,12 @@
             $objOrder = new Order();
             $orders = $objOrder->getClientOrders($id);
             if (empty($orders)) {
-                $yes = '/ecommerce'.$this->objURL->getCurrent().'/remove/1';
+                $yes = BASE_PATH.'/'.$this->objURL->getCurrent().'/remove/1';
                 $no = 'javascript:history.go(-1)';
                 $remove = $this->objURL->get('remove');
                 if (!empty($remove)) {
                     $objUser->removeUser($id);
-                    Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array('action', 'id', 'remove', 'srch', Paging::$_key)));
+                    Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id', 'remove', 'srch', Paging::$key)));
                 }
                 require_once('_header.php');
 ?>

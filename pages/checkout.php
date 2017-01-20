@@ -1,11 +1,18 @@
 <?php 
     
+    use SSD\Login;
+    use SSD\User;
+    use SSD\Form;
+    use SSD\Validation;
+    use SSD\Session;
+    use SSD\Helper;
+    
     Login::restrictFront($this->objURL);
     //xem xem co log in chua, neu chua thi dua qua page login voi referrer la check out de sau khi login thanh cong
     //nguoi dung duoc dua ve trang check out
     
     $objUser = new User();
-    $user = $objUser->getUser(Session::getSession(Login::$_login_front));
+    $user = $objUser->getUser(Session::getSession(Login::$login_front));
     
     
     if(!empty($user)) {
@@ -14,7 +21,7 @@
         $objValid = new Validation($objForm);
         
         if ($objForm->isPost('first_name')) {
-            $objValid->_expected = array(
+            $objValid->expected = array(
                 'first_name',
                 'last_name',
                 'address_1',
@@ -34,7 +41,7 @@
                 'ship_country'
             );
             
-            $objValid->_required = array(
+            $objValid->required = array(
                 'first_name',
                 'last_name',
                 'address_1',
@@ -46,18 +53,18 @@
                 'same_address'
             );
             
-            $objValid->_special = array(
+            $objValid->special = array(
                 'email' => 'email'
             );
             
-            $array = $objForm->getPostArray($objValid->_expected);
+            $array = $objForm->getPostArray($objValid->expected);
             
             if(empty($array['same_address'])) {
-                $objValid->_required[] = 'ship_address_1';
-                $objValid->_required[] = 'ship_town';
-                $objValid->_required[] = 'ship_county';
-                $objValid->_required[] = 'ship_post_code';
-                $objValid->_required[] = 'ship_country';                
+                $objValid->required[] = 'ship_address_1';
+                $objValid->required[] = 'ship_town';
+                $objValid->required[] = 'ship_county';
+                $objValid->required[] = 'ship_post_code';
+                $objValid->required[] = 'ship_country';                
             } else {
                 $array['ship_address_1'] = null;
                 $array['ship_address_2'] = null;
@@ -68,8 +75,8 @@
             }
             
             if ($objValid->isValid($array)) {
-                if($objUser->updateUser($objValid->_post, $user['id'])) {
-                    Helper::redirect("/ecommerce/".$this->objURL->href('summary'));
+                if($objUser->updateUser($objValid->post, $user['id'])) {
+                    Helper::redirect(BASE_PATH.'/'..$this->objURL->href('summary'));
                 } else {
                     $mess = "<p class=\"red\">There was a problem updating your details.<br />Please contact admin.</p>";
                 }
@@ -190,7 +197,7 @@
 <?php 
         require_once('_footer.php');
     } else {
-        Helper::redirect("/ecommerce/".$this->objURL->href('error'));    
+        Helper::redirect(BASE_PATH.'/'..$this->objURL->href('error'));    
     }
      
     

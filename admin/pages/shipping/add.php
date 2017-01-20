@@ -1,15 +1,23 @@
 <?php
+
+    use \Exception;
+    use SSD\Form;
+    use SSD\Validation;
+    use SSD\Plugin;
+    use SSD\Country;
+    use SSD\Helper;
+
     $objForm = new Form();
     $objValid = new Validation($objForm);
-    $objValid->_expected = array('name', 'local');
-    $objValid->_required = array('name');
+    $objValid->expected = array('name', 'local');
+    $objValid->required = array('name');
     
     try {
         if($objValid->isValid()) {
-            if($objShipping->addType($objValid->_post)) {
+            if($objShipping->addType($objValid->post)) {
                 $replace = array();
-                $urlSort = '/ecommerce/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'sort'));
-                if(!empty($objValid->_post['local'])) {
+                $urlSort = BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'sort'));
+                if(!empty($objValid->post['local'])) {
                     $rows = $objShipping->getTypes(1);
                     $zones = $objShipping->getZones();
                     $replace['#typesLocal'] = PLugin::get('admin'.DS.'shipping', array('rows' => $rows, 'objURL' => $this->objURL, 'urlSort' => $urlSort, 'zones' => $zones));
@@ -28,6 +36,6 @@
             throw new Exception('Missing parameter');
         }
     } catch (Exception $e) {
-        echo Helper::json(array('error' => true, 'validation' => $objValid->_errorsMessages));
+        echo Helper::json(array('error' => true, 'validation' => $objValid->errorsMessages));
     }
 ?>

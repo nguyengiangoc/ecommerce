@@ -1,13 +1,20 @@
 <?php 
-    if(Login::isLogged(Login::$_login_admin)) {
-        Helper::redirect(Login::$_dashboard_admin);
+
+    use SSD\Login;
+    use SSD\Helper;
+    use SSD\Form;
+    use SSD\Validation;
+    
+
+    if(Login::isLogged(Login::$login_admin)) {
+        Helper::redirect(Login::$dashboard_admin);
     }
     $objForm = new Form;
     $objValid = new Validation($objForm);
     if($objForm->isPost('login_email')) {
-        $objAdmin = new Admin();
-        if($objAdmin->isUser($objForm->getPost('login_email'), $objForm->getPost('login_password'))) {
-            Login::loginAdmin($objAdmin->_id, $this->objURL->href($this->objURL->get(Login::$_referrer)));
+
+        if($this->objAdmin->isUser($objForm->getPost('login_email'), $objForm->getPost('login_password'))) {
+            Login::loginAdmin($this->objAdmin->id, $this->objURL->href($this->objURL->get(Login::$referrer)));
         } else {
             $objValid->add2Errors('login');
         }

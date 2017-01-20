@@ -1,4 +1,12 @@
 <?php 
+
+    use SSD\Order;
+    use SSD\Form;
+    use SSD\Validation;
+    use SSD\User;
+    use SSD\Catalogue;
+    use SSD\Helper;
+
     $id = $this->objURL->get('id');
     if(!empty($id)) {
         
@@ -17,16 +25,16 @@
             $status = $objOrder->getStatuses();
             
             if($objForm->isPost('status')) {
-                $objValid->_expected = array('status', 'notes');
-                $objValid->_required = array('status');
+                $objValid->expected = array('status', 'notes');
+                $objValid->required = array('status');
                 
-                $vars = $objForm->getPostArray($objValid->_expected);
+                $vars = $objForm->getPostArray($objValid->expected);
                 
                 if($objValid->isValid()) {
                     if($objOrder->updateOrder($id, $vars)) {
-                        Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
+                        Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
                     } else {
-                        Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
+                        Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
                     }
                 }
             }
@@ -59,7 +67,7 @@
                             <td><?php echo $product['id']; ?></td>
                             <td><?php echo Helper::encodeHTML($product['name']); ?></td>
                             <td class="ta_r"><?php $item['qty']; ?></td>
-                            <td class="ta_r">&pound;<?php echo number_format(($item['price'] * $item['qty']), 2); ?></td>
+                            <td class="ta_r"><?php echo $this->objCurrency->display(number_format(($item['price'] * $item['qty']), 2)); ?></td>
                         </tr>
                     <?php } ?>
                 <?php } ?>
@@ -67,19 +75,19 @@
                     <th>Shipping:</th>
                     <td colspan="3"><?php echo Helper::encodeHTML($order['shipping_type']); ?></td>
                     
-                    <td>&pound;<?php echo number_format($order['shipping_cost'], 2); ?></td>
+                    <td><?php echo $this->objCurrency->display(number_format($order['shipping_cost'], 2)); ?></td>
                 </tr>
                 <tr>
                     <th>Sub-total:</th>
-                    <td colspan="4" class="ta_r">&pound;<?php echo number_format($order['subtotal'], 2); ?></td>
+                    <td colspan="4" class="ta_r"><?php echo $this->objCurrency->display(number_format($order['subtotal'], 2)); ?></td>
                 </tr>
                 <tr>
                     <th>VAT (<?php echo $order['vat_rate']; ?>%):</th>
-                    <td colspan="4" class="ta_r">&pound;<?php echo number_format($order['vat'], 2); ?></td>
+                    <td colspan="4" class="ta_r"><?php echo $this->objCurrency->display(number_format($order['vat'], 2)); ?></td>
                 </tr>
                 <tr>
                     <th>Total:</th>
-                    <td colspan="4" class="ta_r"><strong>&pound;<?php echo number_format($order['total'], 2); ?></strong></td>
+                    <td colspan="4" class="ta_r"><strong><?php echo $this->objCurrency->display(number_format($order['total'], 2)); ?></strong></td>
                 </tr>
                 <tr>
                     <th>Client:</th>
@@ -146,10 +154,10 @@
                     <th>&nbsp;</th>
                     <td colspan="4">
                         <div class="sbm sbm_blue fl_r">
-                            <a href="/ecommerce/<?php echo $this->objURL->getCurrent(array('action'), false, array('action', 'invoice'));?>" class="btn" target="_blank">Invoice</a>
+                            <a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action'), false, array('action', 'invoice'));?>" class="btn" target="_blank">Invoice</a>
                         </div>
                         <div class="sbm sbm_blue fl_l mr_r4">
-                            <a href="/ecommerce/<?php echo $this->objURL->getCurrent(array('action', 'id')); ?>" class="btn">Go back</a>
+                            <a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id')); ?>" class="btn">Go back</a>
                         </div>
                         <label for="btn_update" class="sbm sbm_blue fl_l"><input type="submit" id="btn_update" class="btn" value="Update" /></label>
                     </td>

@@ -1,5 +1,10 @@
 <?php
-    if($objCountry->remove($country['id'])) {
+
+    use \Exception;
+    use SSD\Helper;
+    use SSD\Plugin;
+
+    if($objCountry->delete($country['id'])) {
         $replace = array();
         $countries = $objCountry->getCountries(true);
         $replace['#countryList'] = Plugin::get('admin'.DS.'country', array('rows' => $countries, 'objURL' => $this->objURL));

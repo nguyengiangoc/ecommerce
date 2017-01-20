@@ -54,7 +54,7 @@
             if($this->_numb_of_pages > 1) {
                 $out = array();
                 if($this->_current > 1) {
-                    $out[] = "<a href=\"/ecommerce/".$this->url.PAGE_EXT."\">First</a>";
+                    $out[] = "<a href=\"".BASE_PATH.'/'.$this->url.PAGE_EXT."\">First</a>";
                     //property url duoc goi tu function get url o tren, da~ bo attribute pg di roi, nen khong co pg, ma mac dinh k co pg
                     //tuc la trang 1
                 } else {
@@ -65,7 +65,7 @@
                 if($this->_current > 1) {
                     $id = ($this->_current - 1);
                     $url = $id > 1 ? $this->url."/".self::$key."/".$id.PAGE_EXT : $this->url.PAGE_EXT;
-                    $out[] = "<a href=\"/ecommerce/{$url}\">Previous</a>";
+                    $out[] = "<a href=\"".BASE_PATH.'/'.$url."\">Previous</a>";
                 } else {
                     $out[] = "<span>Previous</span>";
                 }
@@ -73,14 +73,14 @@
                 if($this->_current != $this->_numb_of_pages) {
                     $id = ($this->_current + 1);
                     $url = $this->url."/".self::$key."/".$id.PAGE_EXT;
-                    $out[] = "<a href=\"/ecommerce/{$url}\"\">Next</a>";
+                    $out[] = "<a href=\"".BASE_PATH.'/'.$url."\">Next</a>";
                 } else {
                     $out[] = "<span>Next</span>";
                 }
                 
                 if($this->_current != $this->_numb_of_pages) {
                     $url = $this->url."/".self::$key."/".$this->_numb_of_pages;
-                    $out[] = "<a href=\"/ecommerce/{$url}\"\">Last</a>";
+                    $out[] = "<a href=\"".BASE_PATH.'/'.$url."\">Last</a>";
                 } else {
                     $out[] = "<span>Last</span>";
                 }

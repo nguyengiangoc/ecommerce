@@ -1,4 +1,11 @@
 <?php 
+
+    use SSD\Form;
+    use SSD\Validation;
+    use SSD\Catalogue;
+    use SSD\Helper;
+    use SSD\Upload;
+
     $id = $this->objURL->get('id');
     if(!empty($id)) {
         
@@ -12,7 +19,7 @@
             $category = $objCatalogue->getCategories();
     
             if($objForm->isPost('name')) {
-                $objValid->_expected = array(
+                $objValid->expected = array(
                     'category',
                     'name',
                     'description',
@@ -20,10 +27,9 @@
                     'weight',
                     'identity',
                     'meta_title',
-                    'meta_description',
-                    'meta_keywords'
+                    'meta_description'
                 );
-                $objValid->_required = array(
+                $objValid->required = array(
                     'category',
                     'name',
                     'description',
@@ -31,30 +37,29 @@
                     'weight',
                     'identity',
                     'meta_title',
-                    'meta_description',
-                    'meta_keywords'
+                    'meta_description'
                 );
                 if($objValid->isValid()) {
-                    $objValid->_post['identity'] = Helper::cleanString($objValid->_post['identity']);
+                    $objValid->post['identity'] = Helper::cleanString($objValid->post['identity']);
             
-                    if($objCatalogue->isDuplicateProduct($objValid->_post['identity'], $id)) {
+                    if($objCatalogue->isDuplicateProduct($objValid->post['identity'], $id)) {
                         $objValid->add2Errors('duplicate_identity');
                     } else {
-                        if($objCatalogue->updateProduct($objValid->_post, $id)) {                       
+                        if($objCatalogue->updateProduct($objValid->post, $id)) {                       
                             $objUpload = new Upload();
                             if($objUpload->upload(CATALOGUE_PATH)) {
                                 if(is_file(CATALOGUE_PATH.DS.$product['image'])) {
                                     unlink(CATALOGUE_PATH.DS.$product['image']);
                                 }   
-                                $objCatalogue->updateProduct(array('image' => $objUpload->_names[0]), $id);
+                                $objCatalogue->updateProduct(array('image' => $objUpload->names[0]), $id);
                                 //neu upload duoc anh thanh cong thi cho duong dan cua anh vao trong database
-                                Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
+                                Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
                                 //tuc la lay phan param page=products, bo cai action=add, id=bao nhieu day
                             } else {
-                                Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-no-upload')));
+                                Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-no-upload')));
                             }
                         } else {
-                            Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
+                            Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
                         }
                     }
                 }
@@ -103,10 +108,6 @@
             <tr>
                 <th><label for="meta_description">Meta description: *</label></th>
                 <td><?php echo $objValid->validate('meta_description'); ?><textarea name="meta_description" id="meta_description" class="tar_fixed" ><?php echo $objForm->stickyText('meta_description', $product['meta_description']); ?></textarea></td>
-            </tr>
-            <tr>
-                <th><label for="meta-keywords">Meta keywords: *</label></th>
-                <td><?php echo $objValid->validate('meta_keywords'); ?><textarea name="meta_keywords" id="meta_keywords" class="tar_fixed" ><?php echo $objForm->stickyText('meta_keywords', $product['meta_keywords']); ?></textarea></td>
             </tr>
             <tr>
                 <th><label for="image">Image: *</label></th>

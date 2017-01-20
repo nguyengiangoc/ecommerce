@@ -1,9 +1,15 @@
 <?php 
     
-    if(Login::isLogged(Login::$_login_front)) {
+    use SSD\Login;
+    use SSD\Helper;
+    use SSD\Form;
+    use SSD\Validation;
+    use SSD\User;
+    
+    if(Login::isLogged(Login::$login_front)) {
     //kiem tra xem trong array session co attribute valid = 1  khong
     //kiem tra xem trong array session co attribute cid khong    
-        Helper::redirect(Login::$_dashboard_front); 
+        Helper::redirect(BASE_PATH.'/'.Login::$dashboard_front); 
         //neu da log in roi thi dua sang page order
     }
     
@@ -13,7 +19,7 @@
     
     if ($objForm->isPost('login_email')) {
         if($objUser->isUser($objForm->getPost('login_email'), $objForm->getPost('login_password'))) {
-            Login::loginFront($objUser->_id, '/ecommerce/'.$this->objURL->href($this->objURL->get(Login::$_referrer)));  
+            Login::loginFront($objUser->id, BASE_PATH.'/'.$this->objURL->href($this->objURL->get(Login::$referrer)));  
             //neu tim thay thong tin ve email va password trong co so du lieu thi cho login, dua thong tin vao array session
             //va dua ve trang trong referrer tren URl
         } else {
@@ -24,7 +30,7 @@
     if($objForm->isPost('first_name')) {
     //khi nhan submit thi tat ca cac field trong form duoc dua vao array post, vi vay chi can kiem tra field dau tien xem co trong post hay k
     //la du de biet duoc nut nhan da duoc kich hoat hay chua
-        $objValid->_expected = array(
+        $objValid->expected = array(
             'first_name',
             'last_name',
             'address_1',
@@ -38,7 +44,7 @@
             'confirm_password'
         );
         
-        $objValid->_required = array(
+        $objValid->required = array(
             'first_name',
             'last_name',
             'address_1',
@@ -52,16 +58,16 @@
         );
         
         
-        $objValid->_special = array(
+        $objValid->special = array(
             'email' => 'email'
         );
         
-        $objValid->_post_remove = array(
+        $objValid->post_remove = array(
             'confirm_password'
             //xoa cai nay ra khoi array post 
         );
         
-        $objValid->_post_format = array(
+        $objValid->post_format = array(
             'password' => 'password'
         );
         
@@ -78,7 +84,7 @@
         if(!empty($user)) {
             if($user['active'] != 1) {
                     $emailInactive = '<a href="#" id="emailInactive" data-id="'.$user['id'].'">Email address already taken : Resend activation email</a>';
-                    $objValid->_message['email_inactive'] = $emailInactive;
+                    $objValid->message['email_inactive'] = $emailInactive;
                     $objValid->add2Errors('email_inactive');
             } else {
                 $objValid->add2Errors('email_duplicate');
@@ -88,11 +94,11 @@
         
         if($objValid->isValid()) {
             //them hash vao trong tai khoan can duoc kich hoat
-            $objValid->_post['hash'] = mt_rand().date('YmdHis').mt_rand();
+            $objValid->post['hash'] = mt_rand().date('YmdHis').mt_rand();
             
-            $objValid->_post['date'] = Helper::setDate();
+            $objValid->post['date'] = Helper::setDate();
             
-            $link = $objUser->addUser($objValid->_post, $objForm->getPost('password'));
+            $link = $objUser->addUser($objValid->post, $objForm->getPost('password'));
             
             //if($objUser->addUser($objValid->_post, $objForm->getPost('password'))) {
                 //Helper::redirect('?page=registered');

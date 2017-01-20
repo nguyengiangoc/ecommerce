@@ -1,4 +1,8 @@
 <?php
+
+    use \Exception;
+    use SSD\Helper;
+
     if(!empty($_POST)) {
         $errors = array();
         foreach($_POST as $row) {

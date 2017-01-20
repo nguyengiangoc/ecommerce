@@ -1,4 +1,10 @@
 <?php
+
+    use SSD\Catalogue;
+    use SSD\Paging;
+    use SSD\Helper;
+    use SSD\Basket;
+    
     $cat = $this->objURL->get('category'); //luc nay duong dan tren link la identity
     if(empty($cat)) { 
         //kiem tra xem attribute category co tren duong dan khong
@@ -11,9 +17,8 @@
             //luc nay la da ton tai attribute category, xem trong csdl co category nao giong voi cat id tren duong dan khong
             require_once("error.php");
         } else {
-            $this->_meta_title = $category['meta_title'];
-            $this->_meta_description = $category['meta_description'];
-            $this->_meta_keywords = $category['meta_keywords'];
+            $this->meta_title = $category['meta_title'];
+            $this->meta_description = $category['meta_description'];
             
             $rows = $objCatalogue->getProducts($category['id']);
             
@@ -23,7 +28,7 @@
             require_once("_header.php");
 ?>
 
-<h1>Catagory: <?php echo $category['name'];  ?></h1>
+<h1>Catagory: <?php echo $category['name']; echo BASE_PATH; ?></h1>
 
 <?php
             if(!empty($rows)) {
@@ -44,11 +49,11 @@
                     </div>
                     <div class="catalogue_wrapper_right">
                     
-                        <h4><a href="/ecommerce/<?php echo $link; ?>">
+                        <h4><a href="<?php echo BASE_PATH.'/'.$link; ?>">
                         <?php echo Helper::encodeHTML($row['name'], 1); ?>                
                         </a></h4>
                         
-                        <h4>Price: <?php echo Catalogue::$_currency; echo number_format($row['price'],2); ?><br />
+                        <h4>Price: <?php echo $this->objCurrency->display(number_format($row['price'],2)); ?><br />
                         Weight: <?php echo $row['weight']; ?></h4>
                         
                         <p><?php echo Helper::shortenString(Helper::encodeHTML($row['description'])); ?></p>

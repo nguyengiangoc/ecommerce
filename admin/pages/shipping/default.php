@@ -1,4 +1,8 @@
 <?php
+
+    use \Exception;
+    use SSD\Helper;
+
     if($type['default'] == 1) {
         throw new Exception('Operation not permitted');
     }

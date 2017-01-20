@@ -8,9 +8,11 @@
         </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="/ecommerce/js/jquery.livequery.js" type="text/javascript"></script>
-    <script src="/ecommerce/js/jquery.tablednd.0.7.min.js" type="text/javascript"></script>
-    <script src="/ecommerce/js/admin.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_PATH; ?>/js/jquery.livequery.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_PATH; ?>/js/jquery.tablednd.0.7.min.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_PATH; ?>/js/admin.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_PATH; ?>/js/object/adminObject.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_PATH; ?>/js/object/systemObject.js" type="text/javascript"></script>
 </body>
 
 

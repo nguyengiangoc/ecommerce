@@ -1,5 +1,5 @@
 <?php
-    $url = '/ecommerce/'.$this->objURL->getCurrent(array('action', 'id'));
+    $url = BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'));
     require_once('template/_header.php');
 ?>
 <h1>Products :: Edit</h1>

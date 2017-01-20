@@ -17,7 +17,7 @@
         protected $_username;
         protected $_password;
         
-        private $_persistent = true;
+        private $_persistent = false;
         private $_fetchMode = PDO::FETCH_ASSOC;
         private $_driverOptions = array();
         private $_connectionString = null;
@@ -36,7 +36,7 @@
                 
                 if(ENVIRONMENT == 1) {
                     //development environment
-                    return $e->getMessages();
+                    return $e->getMessage();
                     
                 } else {
                     //production environment
@@ -90,12 +90,15 @@
             
             try {
                 
+                
+                //$this->_pdoObject = new PDO('mysql:dbname=ecommerce;host=localhost:8080', 'root', , $this->_driverOptions);
+                
                 $this->_pdoObject = new PDO($this->_connectionString, $this->_username, $this->_password, $this->_driverOptions);
                 
             } catch (PDOException $e) {
                 
-                echo $this->_exceptionOutput($e, 'There was a problem with the Database connection');
-                
+                //echo $this->_exceptionOutput($e, 'There was a problem with the Database connection');
+                echo $e->getMessage();
             }
             
         }
@@ -348,7 +351,7 @@
         
         private function _isSelectOneValid($table = null, $value = null, $field = null) {
             
-            return !empty($table) && Helper::isEmpty($value) && !empty($field);
+            return !empty($table) && !Helper::isEmpty($value) && !empty($field);
             
         }
         

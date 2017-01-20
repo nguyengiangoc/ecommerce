@@ -1,4 +1,8 @@
 <?php
+
+    use \Exception;
+    use SSD\Helper;
+
     if($objShipping->removeZone($zone['id'])) {
         echo Helper::json(array('error' => false));
     } else {

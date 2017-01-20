@@ -1,12 +1,18 @@
 <?php
+
+    use SSD\Order;
+    use SSD\Helper;
+    use SSD\Paging;
+    
+
     $objOrder = new Order();
     
     if(isset($_POST['srch'])) {
         
         if(!empty($_POST['srch'])) {
-            $url = '/ecommerce/'.$this->objURL->getCurrent('srch').'/srch/'.urlencode(stripslashes(str_replace('/','',$_POST['srch'])));
+            $url = BASE_PATH.'/'.$this->objURL->getCurrent('srch').'/srch/'.urlencode(stripslashes(str_replace('/','',$_POST['srch'])));
         } else {
-            $url = '/ecommerce/'.$this->objURL->getCurrent('srch');
+            $url = BASE_PATH.'/'.$this->objURL->getCurrent('srch');
         }
         Helper::redirect($url);
         
@@ -26,7 +32,7 @@
         require_once('_header.php');
 ?>
 <h1>Orders</h1>
-<form action="/ecommerce/<?php echo $this->objURL->getCurrent('srch'); ?>" method="post">
+<form action="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent('srch'); ?>" method="post">
     
     <table cellpadding="0" cellspacing="0" border="0" class="tbl_insert">
         <tr>
@@ -59,14 +65,14 @@
             <td class="ta_r">
                 <?php 
                     if ($order['status'] == 1) { ?>
-                        <a href="/ecommerce/<?php echo $this->objURL->getCurrent(array('action', 'srch')).'/action/remove/id/'.$order['id']; ?>">Remove</a>
+                        <a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'srch')).'/action/remove/id/'.$order['id']; ?>">Remove</a>
                 <?php } else { ?>
                     <span class="inactive">Remove</span>
                 <?php } ?>
             
             
             </td>
-            <td class="ta_r"><a href="/ecommerce/<?php echo $this->objURL->getCurrent(array('action', 'srch')).'/action/edit/id/'.$order['id']; ?>">View</a></td>
+            <td class="ta_r"><a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'srch')).'/action/edit/id/'.$order['id']; ?>">View</a></td>
         </tr>
         <?php } ?>
     </table>

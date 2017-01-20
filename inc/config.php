@@ -1,7 +1,13 @@
 <?php
-
-    defined("BASE_PATH")
-        || define("BASE_PATH", $_SERVER['REQUEST_URI']);
+    
+    if(ENVIRONMENT == 1) {
+        defined("BASE_PATH")
+            || define("BASE_PATH", '/ecommerce');
+    } else {
+        defined("BASE_PATH")
+            || define("BASE_PATH", '/');
+    }
+    
     
     defined("COUNTRY_LOCAL")
         || define("COUNTRY_LOCAL", 229);
@@ -86,13 +92,13 @@
 //DATABASE
 
     defined("DB_HOST")
-        || define("DB_HOST", 'localhost:8080');
+        || define("DB_HOST", 'localhost');
         
     defined("DB_NAME")
-        || define("DB_NAME", '');
+        || define("DB_NAME", 'ecommerce');
     
     defined("DB_USER")
-        || define("DB_USER", '');
+        || define("DB_USER", 'root');
         
     defined("DB_PASS")
         || define("DB_PASS", '');

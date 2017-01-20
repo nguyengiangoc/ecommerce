@@ -1,21 +1,28 @@
 <?php
+
+    use \Exception;
+    use SSD\Form;
+    use SSD\Validation;
+    use SSD\Plugin;
+    use SSD\Helper;
+
     $objForm = new Form();
     $objValid = new Validation();
-    $objValid->_expected = array('weight', 'cost');
-    $objValid->_required = array('weight', 'cost');
+    $objValid->expected = array('weight', 'cost');
+    $objValid->required = array('weight', 'cost');
     
     try {
         if($objValid->isValid()) {
-            if($objShipping->isDuplicateInternational($id, $zid, $objValid->_post['weight'])) {
+            if($objShipping->isDuplicateInternational($id, $zid, $objValid->post['weight'])) {
                 $objValid->add2Errors('weight', 'Duplicate weight');
                 throw new Exception('Duplicate weight');
             }
-            $objValid->_post['type'] = $id;
-            $objValid->_post['country'] = $zid;
-            if($objShipping->addShipping($objValid->_post)) {
+            $objValid->post['type'] = $id;
+            $objValid->post['country'] = $zid;
+            if($objShipping->addShipping($objValid->post)) {
                 $replace = array();
                 $shipping = $objShipping->getShippingByTypeCountry($id, $zid);
-                $replace['#shippingList'] = Plugin::get('admin'.DS.'shipping-cost', array('rows' => $shipping, 'objURL' => $this->objURL));
+                $replace['#shippingList'] = Plugin::get('admin'.DS.'shipping-cost', array('rows' => $shipping, 'objURL' => $this->objURL, 'objCurrency' => $this->objCurrency));
                 echo Helper::json(array('error' => false, 'replace' => $replace));
             } else {
                 $objValid->add2Errors('weight', 'Record could not be updated');
@@ -25,6 +32,6 @@
             throw new Exception('Invalid request');
         }
     } catch (Exception $e) {
-        echo Helper::json(array('error' => true, 'validation' => $objValid->_errorsMessages));
+        echo Helper::json(array('error' => true, 'validation' => $objValid->errorsMessages));
     }
 ?>

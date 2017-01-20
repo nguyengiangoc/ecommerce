@@ -1,13 +1,17 @@
 <?php
+
+    use SSD\Catalogue;
+    use SSD\Helper;
+    use SSD\Basket;
+
     $id = $this->objURL->get('item');
     if(!empty($id)) {
         $objCatalogue = new Catalogue();
         $product = $objCatalogue->getProductByIdentity($id);
 
         if(!empty($product)) {
-            $this->_meta_title = $product['meta_title'];
-            $this->_meta_description = $product['meta_description'];
-            $this->_meta_keywords = $product['meta_keywords'];
+            $this->meta_title = $product['meta_title'];
+            $this->meta_description = $product['meta_description'];
             
             $category = $objCatalogue->getCategory($product['category']);
             require_once('_header.php');
@@ -25,7 +29,7 @@
 
             
             echo "<div class=\"rgt\"><h3>" . $product['name'] . "</h3>";
-            echo "<h4><strong>&pound;".$product['price']."</strong></h4>";
+            echo "<h4><strong>".$this->objCurrency->display($product['price'])."</strong></h4>";
             echo Basket::activeButton($product['id']);
             echo "</div>"; //dong div rgt
             echo "</div>"; //dong div fl_l

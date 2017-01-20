@@ -1,4 +1,9 @@
 <?php 
+
+    use SSD\Session;
+    use SSD\Order;
+    use SSD\Helper;
+
     Session::clear('basket'); 
     $token = $this->objURL->get('token');
     if(!empty($token)) {
@@ -32,7 +37,7 @@ The details of your order are as followed:</p>
         <tr>
             <td><?php echo $item['name']; ?></td>
             <td class="ta_r"><?php echo $item['qty']; ?></td>
-            <td class="ta_r">&pound;<?php echo number_format($item['price_total'], 2); ?></td>
+            <td class="ta_r"><?php echo $this->objCurrency->display(number_format($item['price_total'], 2)); ?></td>
         </tr>
     <?php } ?>
     <tbody class="rowHighLight">
@@ -41,7 +46,7 @@ The details of your order are as followed:</p>
                 <i>Items total:</i>
             </td>
             <td class="ta_r br_td">
-                <i>&pound;<?php echo number_format($order['subtotal_items'], 2); ?></i>
+                <i><?php echo $this->objCurrency->display(number_format($order['subtotal_items'], 2)); ?></i>
             </td>
         </tr>
         <tr>
@@ -49,7 +54,7 @@ The details of your order are as followed:</p>
                 Shipping: <?php echo $order['shipping_type']; ?>
             </td>
             <td class="ta_r br_td">
-                &pound;<?php echo number_format($order['shipping_cost'], 2); ?>
+                <?php echo $this->objCurrency->display(number_format($order['shipping_cost'], 2)); ?>
             </td>
         </tr>
         <tr>
@@ -57,7 +62,7 @@ The details of your order are as followed:</p>
                 Sub-total:
             </td>
             <td class="ta_r br_td">
-                &pound;<?php echo number_format($order['subtotal'], 2); ?>
+                <?php echo $this->objCurrency->display(number_format($order['subtotal'], 2)); ?>
             </td>
         </tr>
         <tr>
@@ -65,7 +70,7 @@ The details of your order are as followed:</p>
                 VAT (<?php echo number_format($order['vat_rate']); ?>%):
             </td>
             <td class="ta_r br_td">
-                &pound;<?php echo number_format($order['vat'], 2); ?>
+                <?php echo $this->objCurrency->display(number_format($order['vat'], 2)); ?>
             </td>
         </tr>
         <tr>
@@ -73,7 +78,7 @@ The details of your order are as followed:</p>
                 Total:
             </td>
             <td class="ta_r br_td">
-                <strong>&pound;<?php echo number_format($order['total'], 2); ?></strong>
+                <strong><?php $this->objCurrency->display(echo number_format($order['total'], 2)); ?></strong>
             </td>
         </tr>
     </tbody>

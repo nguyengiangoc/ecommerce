@@ -8,8 +8,11 @@
         </div>
     </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="/ecommerce/js/jquery.livequery.js" type="text/javascript"></script>
-    <script src="/ecommerce/js/basket.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_PATH; ?>/js/jquery.livequery.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_PATH; ?>/js/basket.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_PATH; ?>/js/object/basketObject.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_PATH; ?>/js/object/systemObject.js" type="text/javascript"></script>
+    
 </body>
 
 

@@ -1,7 +1,14 @@
 <?php
+
+    use SSD\Login;
+    use SSD\Order;
+    use SSD\Session;
+    use SSD\Paging;
+    use SSD\Helper;
+
     Login::restrictFront($this->objURL);
     $objOrder = new Order();
-    $orders = $objOrder->getClientOrders(Session::getSession(Login::$_login_front));
+    $orders = $objOrder->getClientOrders(Session::getSession(Login::$login_front));
     
     $objPaging = new Paging($this->objURL, $orders, 10);
     $rows = $objPaging->getRecords();
@@ -22,7 +29,7 @@
                     <td><?php echo $row['id']; ?></td>
                     <td class="ta_r"><?php echo Helper::setDate(1, $row['date']); ?></td>
                     <td class="ta_r"><?php $status = $objOrder->getStatus($row['status']); echo $status['name']; ?></td>
-                    <td class="ta_r">&pound;<?php echo number_format($row['total'], 2); ?></td>
+                    <td class="ta_r"><?php echo $this->objCurrency->display(number_format($row['total'], 2)); ?></td>
                     <td class="ta_r"><?php 
                         if($row['pp_status'] == 1) { 
                             echo '<a href="'.$this->objURL->href('invoice', array('token', $row['token'])).'" target="_blank">Invoice</a>'; 

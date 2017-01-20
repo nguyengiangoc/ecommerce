@@ -1,12 +1,19 @@
 <?php
+
+    use \Exception;
+    use SSD\Form;
+    use SSD\Validation;
+    use SSD\Plugin;
+    use SSD\Helper;
+
     $objForm = new Form();
     $objValid = new Validation($objForm);
-    $objValid->_expected = array('post_code');
-    $objValid->_required = array('post_code');
+    $objValid->expected = array('post_code');
+    $objValid->required = array('post_code');
     
     try {
         if($objValid->isValid()) {
-            $postCode = strtoupper(Helper::alphaNumericalOnly($objValid->_post['post_code']));
+            $postCode = strtoupper(Helper::alphaNumericalOnly($objValid->post['post_code']));
             if($objShipping->isDuplicatePostCode($postCode)) {
                 $objValid->add2Errors('post_code', 'Duplicate post code');
                 throw new Exception('Duplicate post code');
@@ -25,6 +32,6 @@
             throw new Exception('Invalid entry');
         }
     } catch (Exception $e) {
-        echo Helper::json(array('error' => true, 'validation' => $objValid->_errorsMessages));
+        echo Helper::json(array('error' => true, 'validation' => $objValid->errorsMessages));
     }
 ?>

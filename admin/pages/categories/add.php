@@ -1,9 +1,16 @@
 <?php 
+
+    use SSD\Form;
+    use SSD\Validation;
+    use SSD\Catalogue;
+    use SSD\Helper;
+    
+
     $objForm = new Form();
     $objValid = new Validation($objForm);
     if($objForm->isPost('name')) {
-        $objValid->_expected = array('name', 'identity', 'meta_title', 'meta_description','meta_keywords');
-        $objValid->_required = array('name', 'identity', 'meta_title', 'meta_description','meta_keywords');
+        $objValid->expected = array('name', 'identity', 'meta_title', 'meta_description');
+        $objValid->required = array('name', 'identity', 'meta_title', 'meta_description');
         $objCatalogue = new Catalogue();
         $name = $objForm->getPost('name');
         $identity = Helper::cleanString($objForm->getPost('identity'));
@@ -17,11 +24,11 @@
         }
         
         if($objValid->isValid()) {
-            $objValid->_post['identity'] = $identity;
+            $objValid->post['identity'] = $identity;
             if($objCatalogue->addCategory($name)) {
-                Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array(action, id)).'action/added');
+                Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array(action, id)).'action/added');
             } else {
-                Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array(action, id)).'action/added-failed');
+                Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array(action, id)).'action/added-failed');
             }
         }
     }
@@ -47,10 +54,6 @@
         <tr>
             <th><label for="meta_description">Meta description: *</label></th>
             <td><?php echo $objValid->validate('meta_description'); ?><textarea name="meta_description" id="meta_description" class="tar_fixed" ><?php echo $objForm->stickyText('meta_description'); ?></textarea></td>
-        </tr>
-        <tr>
-            <th><label for="meta_keywords">Meta keywords: *</label></th>
-            <td><?php echo $objValid->validate('meta_keywords'); ?><textarea name="meta_keywords" id="meta_keywords" class="tar_fixed" ><?php echo $objForm->stickyText('meta_keywords'); ?></textarea></td>
         </tr>
         <tr>
             <th>&nbsp;</th>

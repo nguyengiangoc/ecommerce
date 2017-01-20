@@ -72,7 +72,7 @@
                 
             } catch (Exception $e) {
                 
-                echo $e->getMessages();
+                echo $e->getMessage();
                 exit;
                 
             }

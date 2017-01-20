@@ -1,4 +1,9 @@
 <?php
+
+    use \Exception;
+    use SSD\Helper;
+    use SSD\Form;
+
     $objForm = new Form();
     $value = $objForm->getPost('value');
     if(!empty($value)) {

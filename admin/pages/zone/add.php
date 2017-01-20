@@ -1,11 +1,18 @@
 <?php
+
+    use \Exception;
+    use SSD\Form;
+    use SSD\Validation;
+    use SSD\Plugin;
+    use SSD\Helper;
+
     $objForm = new Form();
     $objValid = new Validation($objForm); 
-    $objValid->_expected = array('name');
-    $objValid->_required = array('name');
+    $objValid->expected = array('name');
+    $objValid->required = array('name');
     try {
         if($objValid->isValid()) {
-            if($objShipping->addZone($objValid->_post)) {
+            if($objShipping->addZone($objValid->post)) {
                 $replace = array();
                 $zones = $objShipping->getZones();
                 $replace['#zoneList'] = Plugin::get('admin'.DS.'zone', array('rows' => $zones, 'objURL' => $this->objURL));
@@ -18,6 +25,6 @@
             throw new Exception('Invalid entry');
         }
     } catch (Exception $e) {
-        echo Helper::json(array('error' => true, 'validation' => $objValid->_errorsMessages));
+        echo Helper::json(array('error' => true, 'validation' => $objValid->errorsMessages));
     }
 ?>

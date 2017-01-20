@@ -1,4 +1,7 @@
 <?php
+
+    use SSD\Paging;
+
     if(!empty($data['rows'])) {
         unset($data['objURL']->params['call']);
         $objPaging = new Paging($data['objURL'], $data['rows'], 10);
@@ -17,7 +20,7 @@
                 </td>
                 <td class="ta_r">
                     <a href="#" class="clickAddRowConfirm" 
-                    data-url="/ecommerce/<?php echo $data['objURL']->getCurrent(array('call', 'cid'), false, array('call', 'remove', 'cid', $item['id'])); ?>" 
+                    data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent(array('call', 'cid'), false, array('call', 'remove', 'cid', $item['id'])); ?>" 
                     data-span="2">Remove</a>
                 </td>
             </tr>

@@ -1,6 +1,13 @@
 <?php
+
+    use SSD\Business;
+    use SSD\Country;
+    use SSD\Form;
+    use SSD\Validation;
+    use SSD\Helper;
+
 	$objBusiness = new Business();
-	$business = $objBusiness->getBusiness();
+	$business = $objBusiness->getOne(Business::BUSINESS_ID);
     $objCountry = new Country();
     $countries = $objCountry->getCountries();
 	
@@ -9,7 +16,7 @@
     	$objValid = new Validation($objForm);
     	
     	if ($objForm->isPost('name')) {
-        	$objValid->_expected = array(
+        	$objValid->expected = array(
             	'name',
             	'address',
                 'country',
@@ -19,7 +26,7 @@
             	'vat_rate',
                 'vat_number'
         	);
-        	$objValid->_required = array(
+        	$objValid->required = array(
             	'name',
             	'address',
                 'country',
@@ -27,14 +34,14 @@
             	'email',
             	'vat_rate'
         	);
-        	$objValid->_special = array('email' => 'email');
-        	$vars = $objForm->getPostArray($objValid->_expected);
+        	$objValid->special = array('email' => 'email');
+        	$vars = $objForm->getPostArray($objValid->expected);
         	
         	if ($objValid->isValid()) {
-            	if ($objBusiness->updateBusiness($vars)) {
-            	   Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
+            	if ($objBusiness->update($vars, Business::BUSINESS_ID)) {
+            	   Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
             	} else {
-            	   Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
+            	   Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
             	}
         	}
     	

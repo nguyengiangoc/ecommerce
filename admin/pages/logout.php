@@ -1,4 +1,7 @@
 <?php
-Login::logout(Login::$_login_admin);
-Login::restrictAdmin();
+
+    use SSD\Login;    
+    Login::logout(Login::$login_admin);
+    Login::restrictAdmin();
+
 ?>

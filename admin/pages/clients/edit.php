@@ -1,4 +1,10 @@
 <?php
+
+    use SSD\User;
+    use SSD\Form;
+    use SSD\Validation;
+    use SSD\Helper;
+
     $id = $this->objURL->get('id');
     if (!empty($id)) {
         $objUser = new User();
@@ -9,7 +15,7 @@
             $objValid = new Validation($objForm);
             
             if ($objForm->isPost('first_name')) {
-                $objValid->_expected = array(
+                $objValid->expected = array(
                     'first_name',
                     'last_name',
                     
@@ -29,7 +35,7 @@
                     
                     'email'
                 );
-                $objValid->_required = array(
+                $objValid->required = array(
                     'first_name',
                     'last_name',
                     
@@ -40,17 +46,17 @@
                     'country',
                     'email'
                 );
-                $objValid->_special = array('email' => 'email');
+                $objValid->special = array('email' => 'email');
                 $email = $objForm->getPost('email');
                 $duplicate = $objUser->getByEmail($email);
                 if (!empty($duplicate) && $duplicate['id'] != $user['id']) {
                     $objValid->add2Errors('email_duplicate');
                 }
                 if ($objValid->isValid()) {
-                    if ($objUser->updateUser($objValid->_post, $user['id'])) {
-                        Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
+                    if ($objUser->updateUser($objValid->post, $user['id'])) {
+                        Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
                     } else {
-                        Helper::redirect('/ecommerce/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
+                        Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
                     }
                 }
             }

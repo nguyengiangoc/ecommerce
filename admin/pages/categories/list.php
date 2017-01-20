@@ -1,4 +1,9 @@
 <?php
+
+    use SSD\Catalogue;
+    use SSD\Paging;
+    use SSD\Helper;
+
     $objCatalogue = new Catalogue();
     $categories = $objCatalogue->getCategories();
     $objPaging = new Paging($this->objURL, $categories, 5);
@@ -7,7 +12,7 @@
     require_once('_header.php');
 ?>
 <h1>Categories</h1>
-<p><a href="/ecommerce/<?php echo $this->objURL->getCurrent(array('action', 'id')).'/action/add/'; ?>">New category</a></p>
+<p><a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id')).'/action/add/'; ?>">New category</a></p>
 <?php if(!empty($rows)) { ?>
     <table cellpadding="0" cellspacing="0" border="0" class="tbl_repeat">
         <tr>
@@ -18,8 +23,8 @@
         <?php foreach($rows as $category) { ?>
         <tr>
             <td><?php echo Helper::encodeHTML($category['name']); ?></td>
-            <td class="ta_r"><a href="/ecommerce/<?php echo $this->objURL->getCurrent('action').'/action/remove/id/'.$category['id']; ?>">Remove</a></td>
-            <td class="ta_r"><a href="/ecommerce/<?php echo $this->objURL->getCurrent('action').'/action/edit/id/'.$category['id']; ?>">Edit</a></td>
+            <td class="ta_r"><a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent('action').'/action/remove/id/'.$category['id']; ?>">Remove</a></td>
+            <td class="ta_r"><a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent('action').'/action/edit/id/'.$category['id']; ?>">Edit</a></td>
         </tr>
         <?php } ?>
     </table>

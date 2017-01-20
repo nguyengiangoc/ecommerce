@@ -1,9 +1,12 @@
 <?php
+
+    use SSD\Plugin;
+
     $postCodes = $objShipping->getPostCodes($zone['id']);
     require_once('_header.php');
 ?>
 <h1>Post codes for : <?php echo $zone['name']; ?></h1>
-<form method="post" class="ajax" data-action="/ecommerce/<?php echo $this->objURL->getCurrent('call', false, array('call', 'add')); ?>">
+<form method="post" class="ajax" data-action="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent('call', false, array('call', 'add')); ?>">
     <table cellpadding="0" cellspacing="0" border="0" class="tbl_insert">
         <tr>
             <th><label for="post_code" class="valid_post_code">Post code: *</label></th>

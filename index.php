@@ -6,6 +6,8 @@
 
     date_default_timezone_set('Europe/London');
     
+    
+    
     if(!isset($_SESSION)) {
         session_start();
     }
@@ -22,7 +24,9 @@
         ini_set('display_error', 'Off');
         error_reporting(0);
     }
-
+    
+    
+    
     defined("DS")
         || define("DS", DIRECTORY_SEPARATOR);
    
@@ -32,14 +36,24 @@
     require_once('SSD'.DS.'autoloader.php');
     
     
+    
+    
+    
     set_exception_handler(array('SSD\SSDException', 'getOutput'));
     spl_autoload_register(array('SSD\autoloader', 'load'));
+
     
-    throw new Exception('message');
+    
     
     use SSD\Core;
     
+    
+    
+    
     $core = new Core();
+    
+    
+    
     $core->run();
     
 ?>  

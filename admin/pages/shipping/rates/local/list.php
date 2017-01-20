@@ -1,10 +1,13 @@
 <?php
+
+    use SSD\Plugin;
+
     $shipping = $objShipping->getShippingByTypeZone($id, $zid);
     require_once('_header.php');
 ?>
 <h1>Rates for : <?php echo $zone['name']; ?> : <?php echo $type['name']; ?></h1>
 
-<form method="post" class="ajax" data-action="<?php echo '/ecommerce/'.$this->objURL->getCurrent('call', false, array('call', 'add')); ?>">
+<form method="post" class="ajax" data-action="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent('call', false, array('call', 'add')); ?>">
     <table cellpadding="0" cellspacing="0" border="0" class="tbl_insert">
         <tr>
             <th><label for="weight" class="valid_weight">Weight up to: *</label></th>
@@ -24,6 +27,6 @@
     </table>
 </form>
 <div class="dev br_td">&nbsp;</div>
-<div id="shippingList"><?php echo Plugin::get('admin'.DS.'shipping-cost', array('rows' => $shipping, 'objURL' => $this->objURL)); ?></div>
+<div id="shippingList"><?php echo Plugin::get('admin'.DS.'shipping-cost', array('rows' => $shipping, 'objURL' => $this->objURL, 'objCurrency' => $this->objCurrency)); ?></div>
 
 <?php require_once('_footer.php'); ?>

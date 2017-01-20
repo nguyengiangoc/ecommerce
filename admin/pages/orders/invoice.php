@@ -1,5 +1,8 @@
 <?php 
 
+    use SSD\Order;
+    use SSD\Business;
+
     $id = $this->objURL->get('id');
     if(!empty($id)) {
         $objOrder = new Order();
@@ -7,7 +10,7 @@
         if(!empty($order)) {
             $items = $objOrder->getOrderItems($id);
             $objBusiness = new Business;
-            $business = $objBusiness->getBusiness();
+            $business = $objBusiness->getOne(Business::BUSINESS_ID);
             
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -16,9 +19,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Invoice</title>
     <meta name="description" content="Ecommerece website project" />
-    <meta name="keywords" content="Ecommerce website project" />
     <meta http-equiv="imagetoolbar" content="no" />
-    <link href="/ecommerce/css/invoice.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo BASE_PATH; ?>/css/invoice.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div id="wrapper">
@@ -64,30 +66,30 @@
                 <tr>
                     <td><?php $item['name']; ?></td>
                     <td class="ta_r"><?php echo $item['qty']; ?></td>
-                    <td class="ta_r">&pound;<?php echo number_format($item['price_total'], 2); ?></td>
+                    <td class="ta_r"><?php echo $this->objCurrency->display(number_format($item['price_total'], 2)); ?></td>
                 </tr>
             
             <?php } ?>
             <tbody class="summarySection">
                 <tr>
                     <td colspan="2" class="br_td">Items total:</td>
-                    <td class="ta_r br_td">&pound;<?php echo number_format($order['subtotal_items'], 2); ?></td>
+                    <td class="ta_r br_td"><?php echo $this->objCurrency->display(number_format($order['subtotal_items'], 2)); ?></td>
                 </tr>
                 <tr>
                     <td colspan="2" class="br_td">Shipping: <?php echo $order['shipping_type']; ?></td>
-                    <td class="ta_r br_td">&pound;<?php echo number_format($order['shipping_cost'], 2); ?></td>
+                    <td class="ta_r br_td"><?php echo $this->objCurrency->display(number_format($order['shipping_cost'], 2)); ?></td>
                 </tr>
                 <tr>
                     <td colspan="2" class="br_td">Sub-total:</td>
-                    <td class="ta_r br_td">&pound;<?php echo number_format($order['subtotal'], 2); ?></td>
+                    <td class="ta_r br_td"><?php echo $this->objCurrency->display(number_format($order['subtotal'], 2)); ?></td>
                 </tr>
                 <tr>
                     <td colspan="2" class="br_td">VAT (<?php echo $order['vat_rate']; ?>%):</td>
-                    <td class="ta_r br_td">&pound;<?php echo number_format($order['vat'], 2); ?></td>
+                    <td class="ta_r br_td"><?php echo $this->objCurrency->display(number_format($order['vat'], 2)); ?></td>
                 </tr>
                 <tr>
                     <td colspan="2" class="br_td"><strong>Total:</strong></td>
-                    <td class="ta_r br_td"><strong>&pound;<?php echo number_format($order['total'], 2); ?></strong></td>
+                    <td class="ta_r br_td"><strong><?php echo $this->objCurrency->display(number_format($order['total'], 2)); ?></strong></td>
                 </tr>
             </tbody>
         </table>

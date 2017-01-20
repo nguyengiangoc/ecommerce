@@ -1,4 +1,7 @@
 <?php
+
+    use \Exception;
+
     $cid = $this->objURL->get('cid');
     $call = $this->objURL->get('call');
     switch($call) {
