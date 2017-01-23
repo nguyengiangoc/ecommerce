@@ -4,21 +4,32 @@
 
     class Login {
         
-        public static $login_page_front = "/login";
+        public $login_page_front = "/login";
         
-        public static $dashboard_front = "/orders";
+        public $dashboard_front = "/orders";
         
         public static $login_front = "cid";
         
-        public static $login_page_admin = "/panel";
+        public $login_page_admin = "/panel";
         
-        public static $dashboard_admin = "/panel/products";
+        public $dashboard_admin = "/panel/products";
         
         public static $login_admin = "aid";
         
         private static $_valid_login = "valid";
         
         public static $referrer = "refer";
+        
+        public function __construct() {
+            
+            $this->login_page_front = BASE_PATH.$this->login_page_front;
+            $this->dashboard_front = BASE_PATH.$this->dashboard_front;
+            $this->login_page_admin = BASE_PATH.$this->login_page_admin;
+            $this->dashboard_admin = BASE_PATH.$this->dashboard_admin;
+            
+            
+        }
+        
 
         public static function isLogged($case = null) {
             if(!empty($case)) {
@@ -32,42 +43,44 @@
             return false;
         }
         
-        public static function loginFront($id, $url = null) {
+        public function loginFront($id, $url = null) {
             if(!empty($id)) {
-                $url = !empty($url) ? $url : BASE_PATH.'/'.self::$dashboard_front.PAGE_EXT;
+                $url = !empty($url) ? $url : $this->dashboard_front.PAGE_EXT;
                 $_SESSION[self::$login_front] = $id;
                 $_SESSION[self::$_valid_login] = 1;
                 Helper::redirect($url);
+                return 'aaa';
             }
+            //return 'aaa';
         }
         
-        public static function loginAdmin($id = null, $url = null) {
+        public function loginAdmin($id = null, $url = null) {
             if(!empty($id)) {
-                $url = !empty($url) ? $url : self::$dashboard_admin;
+                $url = !empty($url) ? $url : $this->dashboard_admin;
                 $_SESSION[self::$login_admin] = $id;
                 $_SESSION[self::$_valid_login] = 1;
                 Helper::redirect($url);
             }
         }
                
-        public static function restrictFront($objURL = null) {
+        public function restrictFront($objURL = null) {
             $objURL = is_object($objURL) ? $objURL : new URL();
             if(!self::isLogged(self::$login_front)) {
                 //neu nguoi dung chua login thi chuyen huong sang trang login
                 $url = $objURL->cpage != "logout" ?
                 //neu trang dang o khong phai la trang log out 
-                BASE_PATH.self::$login_page_front."/".self::$referrer."/".$objURL->cpage.PAGE_EXT :
+                $this->login_page_front."/".self::$referrer."/".$objURL->cpage.PAGE_EXT :
                     //dua den trang login, tren url them vao thong tin la den tu trang nao trong attribute referrer de sau khi login 
                     //redirect nguoi dung ve trang ho dang xem truoc do
-                    BASE_PATH.self::$login_page_front.PAGE_EXT;
+                    $this->login_page_front.PAGE_EXT;
                     //neu trang dang o la trang log out thi dua den trang log in khong them gi vao url
                 Helper::redirect($url);
             }    
         }
         
-        public static function restrictAdmin() {
+        public function restrictAdmin() {
             if(!self::isLogged(self::$login_admin)) {
-                Helper::redirect(BASE_PATH.'/'.self::$login_page_admin);
+                Helper::redirect($this->login_page_admin);
             }
         }
         

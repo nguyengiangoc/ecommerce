@@ -46,7 +46,7 @@
             </tr>  
         </table>
         <div class="sbm sbm_blue fl_r">
-            <a href="<?php echo BASE_PATH.'/'.$data['objURL']->href('checkout'); ?>" class="btn">Checkout</a>
+            <a href="<?php echo $data['objURL']->href('checkout'); ?>" class="btn">Checkout</a>
         </div>
         <div class="sbm sbm_blue fl_l update_basket">
             <span class="btn">Update</span>

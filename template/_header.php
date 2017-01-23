@@ -23,7 +23,7 @@
     <meta http-equiv="imagetoolbar" content="no" />
     <link href="<?php echo BASE_PATH; ?>/css/core.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
-        document.write("<base href='<?php echo BASE_PATH; ?>' />");
+        var root = '<?php echo BASE_PATH; ?>';
     </script>
 </head>
 
@@ -37,10 +37,10 @@
                     echo '<div id="logged_as">Logged in as: <strong>'.Login::getFullNameFront(Session::getSession(Login::$login_front)).'</strong> | <a href="'.BASE_PATH.'/';
                     echo $this->objURL->href('orders'); //chuyen sang trang order
                     echo '">My orders</a> | <a href="';
-                    echo BASE_PATH.'/'.$this->objURL->href('logout');
+                    echo $this->objURL->href('logout');
                     echo '">Logout</a></div>';
                 } else {
-                    echo '<div id="logged_as"><a href="'.BASE_PATH.'/';
+                    echo '<div id="logged_as"><a href="';
                     echo $this->objURL->href('login');
                     echo '">Login</a></div>';   
                 }
@@ -62,7 +62,7 @@
                         <ul id="navigation">
                         <?php
                             foreach($cats as $cat) {
-                                echo '<li><a href="'.BASE_PATH.'/'.$this->objURL->href('catalogue', array('category', $cat['identity'])).'"';
+                                echo '<li><a href="'.$this->objURL->href('catalogue', array('category', $cat['identity'])).'"';
                                 //echo '<li><a href="/ecommerce/'.$this->objURL->href('category', array($cat['identity'])).'"';
                                 echo $this->objNavigation->active('catalogue', array('category' => $cat['identity'])); 
                                 echo '>';

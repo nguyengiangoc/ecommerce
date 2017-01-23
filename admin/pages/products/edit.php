@@ -19,6 +19,9 @@
             $category = $objCatalogue->getCategories();
     
             if($objForm->isPost('name')) {
+                
+                   
+                
                 $objValid->expected = array(
                     'category',
                     'name',
@@ -41,25 +44,32 @@
                 );
                 if($objValid->isValid()) {
                     $objValid->post['identity'] = Helper::cleanString($objValid->post['identity']);
+                    
+                      
             
                     if($objCatalogue->isDuplicateProduct($objValid->post['identity'], $id)) {
                         $objValid->add2Errors('duplicate_identity');
                     } else {
-                        if($objCatalogue->updateProduct($objValid->post, $id)) {                       
+                       // var_dump($objCatalogue->updateProduct($objValid->post, $id));
+                        if($objCatalogue->updateProduct($objValid->post, $id)) {         
+                            //var_dump($objValid->post);
                             $objUpload = new Upload();
                             if($objUpload->upload(CATALOGUE_PATH)) {
                                 if(is_file(CATALOGUE_PATH.DS.$product['image'])) {
                                     unlink(CATALOGUE_PATH.DS.$product['image']);
                                 }   
+                                
+                                //var_dump($objCatalogue->updateProduct(array('image' => $objUpload->names[0]), $id));
+                                //var_dump($objUpload);
                                 $objCatalogue->updateProduct(array('image' => $objUpload->names[0]), $id);
-                                //neu upload duoc anh thanh cong thi cho duong dan cua anh vao trong database
-                                Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
-                                //tuc la lay phan param page=products, bo cai action=add, id=bao nhieu day
+                                #neu upload duoc anh thanh cong thi cho duong dan cua anh vao trong database
+                                Helper::redirect($this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
+                                #tuc la lay phan param page=products, bo cai action=add, id=bao nhieu day
                             } else {
-                                Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-no-upload')));
+                                Helper::redirect($this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-no-upload')));
                             }
                         } else {
-                            Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
+                            Helper::redirect($this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
                         }
                     }
                 }

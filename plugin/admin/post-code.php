@@ -20,7 +20,7 @@
                 </td>
                 <td class="ta_r">
                     <a href="#" class="clickAddRowConfirm" 
-                    data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent(array('call', 'cid'), false, array('call', 'remove', 'cid', $item['id'])); ?>" 
+                    data-url="<?php echo $data['objURL']->getCurrent(array('call', 'cid'), false, array('call', 'remove', 'cid', $item['id'])); ?>" 
                     data-span="2">Remove</a>
                 </td>
             </tr>

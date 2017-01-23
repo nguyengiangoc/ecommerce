@@ -32,9 +32,9 @@
                 
                 if($objValid->isValid()) {
                     if($objOrder->updateOrder($id, $vars)) {
-                        Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
+                        Helper::redirect($this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
                     } else {
-                        Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
+                        Helper::redirect($this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
                     }
                 }
             }
@@ -154,10 +154,10 @@
                     <th>&nbsp;</th>
                     <td colspan="4">
                         <div class="sbm sbm_blue fl_r">
-                            <a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action'), false, array('action', 'invoice'));?>" class="btn" target="_blank">Invoice</a>
+                            <a href="<?php echo $this->objURL->getCurrent(array('action'), false, array('action', 'invoice'));?>" class="btn" target="_blank">Invoice</a>
                         </div>
                         <div class="sbm sbm_blue fl_l mr_r4">
-                            <a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id')); ?>" class="btn">Go back</a>
+                            <a href="<?php echo $this->objURL->getCurrent(array('action', 'id')); ?>" class="btn">Go back</a>
                         </div>
                         <label for="btn_update" class="sbm sbm_blue fl_l"><input type="submit" id="btn_update" class="btn" value="Update" /></label>
                     </td>

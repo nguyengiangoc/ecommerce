@@ -33,9 +33,9 @@
                 if($objValid->isValid()) {
                     $objValid->post['identity'] = $identity;
                     if($objCatalogue->updateCategory($name, $id)) {
-                        Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array(action, id)).'/action/edited');
+                        Helper::redirect($this->objURL->getCurrent(array(action, id)).'/action/edited');
                     } else {
-                        Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array(action, id)).'/action/added-failed');
+                        Helper::redirect($this->objURL->getCurrent(array(action, id)).'/action/added-failed');
                     }
                 }
             }

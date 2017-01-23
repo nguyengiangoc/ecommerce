@@ -5,7 +5,9 @@
     use SSD\Country;
     use SSD\Helper;
 
-    Login::restrictAdmin();
+    $objLogin = new Login;
+    $objLogin->restrictAdmin();
+    
     $objCountry = new Country();
     $id = $this->objURL->get('id');
     $action = $this->objURL->get('action');

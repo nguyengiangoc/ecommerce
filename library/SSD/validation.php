@@ -56,7 +56,7 @@
         
         public $special = array();
         
-        public $_post = array();
+        public $post = array();
         
         public $post_remove = array();
         

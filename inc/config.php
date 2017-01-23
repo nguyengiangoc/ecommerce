@@ -49,8 +49,8 @@
     defined("PAGES_DIR")
         || define("PAGES_DIR", "pages");    
     
-    defined("MODULE_DIR")
-        || define("MODULE_DIR", "mod");
+    defined("MOD_DIR")
+        || define("MOD_DIR", "mod");
         
     defined("INC_DIR")
         || define("INC_DIR", "inc");

@@ -1,5 +1,7 @@
 <?php
-    $url = BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'));
+    $url = $this->objURL->getCurrent(array('action', 'id'));
+
+    
     require_once('_header.php');
 ?>
 <h1>Products :: Edit</h1>

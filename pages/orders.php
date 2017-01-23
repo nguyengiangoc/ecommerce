@@ -6,7 +6,9 @@
     use SSD\Paging;
     use SSD\Helper;
 
-    Login::restrictFront($this->objURL);
+    $objLogin = new Login;
+    $objLogin->restrictFront($this->objURL);
+    
     $objOrder = new Order();
     $orders = $objOrder->getClientOrders(Session::getSession(Login::$login_front));
     

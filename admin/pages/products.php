@@ -2,7 +2,9 @@
 
     use SSD\Login;
 
-    Login::restrictAdmin();
+    $objLogin = new Login;
+    $objLogin->restrictAdmin();
+    
     $action = $this->objURL->get('action');
     switch($action) {
         case 'add':

@@ -9,7 +9,7 @@
     require_once('_header.php');
 ?>
 <h1>Local zones</h1>
-<form method="post" class="ajax" data-action="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent('action', false, array('action', 'add')); ?>">
+<form method="post" class="ajax" data-action="<?php echo $this->objURL->getCurrent('action', false, array('action', 'add')); ?>">
     <table cellpadding="0" cellspacing="0" border="0" class="tbl_insert">
         <tr>
             <th><label for="name" class="valid_name">Zone name: *</label></th>
@@ -27,7 +27,7 @@
     </table>
 </form>
 <div class="dev br_td">&nbsp;</div>
-<form method="post" data-url="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'update', 'id')); ?>">
+<form method="post" data-url="<?php echo $this->objURL->getCurrent(array('action', 'id'), false, array('action', 'update', 'id')); ?>">
     <div id="zoneList">
         <?php echo Plugin::get('admin'.DS.'zone', array('rows' => $zone, 'objURL' => $objURL)); ?>
     </div>

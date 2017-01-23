@@ -12,5 +12,5 @@
     <dd class="bl_we"><span><?php echo $objBasket->weight; ?></span></dd>
 </dl>
 <div class="dev br_td">&#160;</div>
-<p><a href="<?php echo BASE_PATH.'/'.$data['objURL']->href('basket'); ?>">View basket</a> | <a href="<?php echo BASE_PATH.'/'.$data['objURL']->href('checkout'); ?>">Checkout</a></p>
+<p><a href="<?php echo $data['objURL']->href('basket'); ?>">View basket</a> | <a href="<?php echo $data['objURL']->href('checkout'); ?>">Checkout</a></p>
 <div class="dev br_td">&#160;</div>

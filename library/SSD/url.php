@@ -121,7 +121,7 @@
                         $out[] = $value; //array cho vao se co dang ten param va property
                     }
                 }
-                return implode('/', $out).PAGE_EXT; //khi xuat ra se co dang main/ten param/property
+                return BASE_PATH.'/'.implode('/', $out).PAGE_EXT; //khi xuat ra se co dang main/ten param/property
             }
         }
         
@@ -155,7 +155,7 @@
             }
             $url = implode('/', $out);
             $url .= $extension ? PAGE_EXT : null;
-            return $url;
+            return BASE_PATH.'/'.$url;
             //ket qua la dang index/blah blah/blah blah
         }
 

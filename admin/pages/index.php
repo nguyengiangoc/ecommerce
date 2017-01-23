@@ -5,16 +5,17 @@
     use SSD\Form;
     use SSD\Validation;
     
+    $objLogin = new Login;
 
     if(Login::isLogged(Login::$login_admin)) {
-        Helper::redirect(Login::$dashboard_admin);
+        Helper::redirect($objLogin->dashboard_admin);
     }
     $objForm = new Form;
     $objValid = new Validation($objForm);
     if($objForm->isPost('login_email')) {
 
         if($this->objAdmin->isUser($objForm->getPost('login_email'), $objForm->getPost('login_password'))) {
-            Login::loginAdmin($this->objAdmin->id, $this->objURL->href($this->objURL->get(Login::$referrer)));
+            $objLogin->loginAdmin($this->objAdmin->id, $this->objURL->href($this->objURL->get(Login::$referrer)));
         } else {
             $objValid->add2Errors('login');
         }

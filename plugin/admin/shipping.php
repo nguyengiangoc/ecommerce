@@ -35,7 +35,7 @@
                                 <?php if (!empty($data['countries'])) { ?>
                                     <?php foreach($data['countries'] as $crow) { ?>
                                         <option value="<?php echo $crow['id']; ?>" 
-                                        data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent('action', false, 
+                                        data-url="<?php echo $data['objURL']->getCurrent('action', false, 
                                         array('action', 'rates', 'id', $item['id'], 'zid', $crow['id'])); ?>">
                                             <?php echo $crow['name']; ?>
                                         </option>
@@ -43,7 +43,7 @@
                                 <?php } else if (!empty($data['zones'])) { ?>
                                     <?php foreach($data['zones'] as $zrow) { ?>
                                         <option value="<?php echo $zrow['id']; ?>" 
-                                        data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent('action', false, 
+                                        data-url="<?php echo $data['objURL']->getCurrent('action', false, 
                                         array('action', 'rates', 'id', $item['id'], 'zid', $zrow['id'])); ?>">
                                             <?php echo $zrow['name']; ?>
                                         </option>
@@ -52,12 +52,12 @@
                             </select>
                         </td>
                         <td>
-                            <a href="#" data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'active', 'id', $item['id'])); ?>" class="clickReplace">
+                            <a href="#" data-url="<?php echo $data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'active', 'id', $item['id'])); ?>" class="clickReplace">
                                 <?php echo $item['active'] == 1 ? 'Yes' : 'No'; ?>
                             </a>
                         </td>
                         <td>
-                            <a href="#" data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'default', 'id', $item['id'])); ?>" 
+                            <a href="#" data-url="<?php echo $data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'default', 'id', $item['id'])); ?>" 
                                 data-group="clickDefault<?php echo $item['local']; ?>" 
                                 data-value="<?php echo $item['default']; ?>" class="clickYesNoSingle">
                                 <?php echo $item['default'] == 1 ? 'Yes' : 'No'; ?>
@@ -65,11 +65,11 @@
                         </td>
                         <td>
                             <a href="#" 
-                            data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'duplicate', 'id', $item['id'])); ?>" 
+                            data-url="<?php echo $data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'duplicate', 'id', $item['id'])); ?>" 
                             class="clickCallReload">Duplicate</a>
                         </td>
                         <td>
-                            <a href="#" data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'remove', 'id', $item['id'])); ?>" 
+                            <a href="#" data-url="<?php echo $data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'remove', 'id', $item['id'])); ?>" 
                             class="clickAddRowConfirm" data-span="7">Remove</a>
                         </td>
                     </tr>

@@ -13,12 +13,12 @@
             $objOrder = new Order();
             $orders = $objOrder->getClientOrders($id);
             if (empty($orders)) {
-                $yes = BASE_PATH.'/'.$this->objURL->getCurrent().'/remove/1';
+                $yes = $this->objURL->getCurrent().'/remove/1';
                 $no = 'javascript:history.go(-1)';
                 $remove = $this->objURL->get('remove');
                 if (!empty($remove)) {
                     $objUser->removeUser($id);
-                    Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id', 'remove', 'srch', Paging::$key)));
+                    Helper::redirect($this->objURL->getCurrent(array('action', 'id', 'remove', 'srch', Paging::$key)));
                 }
                 require_once('_header.php');
 ?>

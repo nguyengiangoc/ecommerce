@@ -9,7 +9,7 @@
         $objCatalogue = new Catalogue();
         $category = $objCatalogue->getCategory($id);
         if(!empty($category)) {
-            $yes = BASE_PATH.'/'.$this->objURL->getCurrent().'remove/1';
+            $yes = $this->objURL->getCurrent().'remove/1';
             $no = 'javascript:history.go(-1)';
             $remove = $this->objURL->get('remove');
             if(!empty($remove)) {

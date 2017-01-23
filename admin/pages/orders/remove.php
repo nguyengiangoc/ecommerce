@@ -9,12 +9,12 @@
         $objOrder = new Order();
         $order = $objOrder->getOrder($id);
         if(!empty($order)) {
-            $yes = BASE_PATH.'/'.$this->objURL->getCurrent().'/remove/1' ;
+            $yes = $this->objURL->getCurrent().'/remove/1' ;
             $no = 'javascript:history.go(-1)';
             $remove = $this->objURL->get('remove');
             if(!empty($remove)) {
                 $objOrder->delete($id);
-                Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id', 'remove', 'srch', Paging::$key))); //tuc la quay ve trang product list
+                Helper::redirect($this->objURL->getCurrent(array('action', 'id', 'remove', 'srch', Paging::$key))); //tuc la quay ve trang product list
             }
             require_once('_header.php');
 ?>

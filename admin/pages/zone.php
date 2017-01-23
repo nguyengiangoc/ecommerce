@@ -5,7 +5,9 @@
     use SSD\Shipping;
     use SSD\Helper;
 
-    Login::restrictAdmin();
+    $objLogin = new Login;
+    $objLogin->restrictAdmin();
+    
     $objShipping = new Shipping();
     $id = $this->objURL->get('id');
     $action = $this->objURL->get('action');

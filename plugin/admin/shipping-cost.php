@@ -16,7 +16,7 @@
                         <td class="ta_r"><?php echo $data['objCurrency']->display(number_format($item['cost'], 2)); ?></td>
                         <td class="ta_r">
                             <a href="#" class="clickAddRowConfirm" 
-                        data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent('call', false, array('call', 'remove', 'rid', $item['id'])); ?>"
+                        data-url="<?php echo $data['objURL']->getCurrent('call', false, array('call', 'remove', 'rid', $item['id'])); ?>"
                         data-span="4">Remove</a>
                         </td>
                     </tr>

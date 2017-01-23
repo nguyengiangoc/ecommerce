@@ -7,7 +7,9 @@
     use SSD\Session;
     use SSD\Helper;
     
-    Login::restrictFront($this->objURL);
+    $objLogin = new Login;
+    $objLogin->restrictFront($this->objURL);
+    
     //xem xem co log in chua, neu chua thi dua qua page login voi referrer la check out de sau khi login thanh cong
     //nguoi dung duoc dua ve trang check out
     
@@ -76,7 +78,7 @@
             
             if ($objValid->isValid($array)) {
                 if($objUser->updateUser($objValid->post, $user['id'])) {
-                    Helper::redirect(BASE_PATH.'/'..$this->objURL->href('summary'));
+                    Helper::redirect($this->objURL->href('summary'));
                 } else {
                     $mess = "<p class=\"red\">There was a problem updating your details.<br />Please contact admin.</p>";
                 }
@@ -197,7 +199,7 @@
 <?php 
         require_once('_footer.php');
     } else {
-        Helper::redirect(BASE_PATH.'/'..$this->objURL->href('error'));    
+        Helper::redirect($this->objURL->href('error'));    
     }
      
     

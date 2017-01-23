@@ -10,9 +10,9 @@
     if(isset($_POST['srch'])) {
         
         if(!empty($_POST['srch'])) {
-            $url = BASE_PATH.'/'.$this->objURL->getCurrent('srch').'/srch/'.urlencode(stripslashes(str_replace('/','',$_POST['srch'])));
+            $url = $this->objURL->getCurrent('srch').'/srch/'.urlencode(stripslashes(str_replace('/','',$_POST['srch'])));
         } else {
-            $url = BASE_PATH.'/'.$this->objURL->getCurrent('srch');
+            $url = $this->objURL->getCurrent('srch');
         }
         Helper::redirect($url);
         
@@ -31,7 +31,7 @@
         require_once('_header.php');
 ?>
     <h1>Clients</h1>
-    <form action="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent('srch'); ?>" method="post">
+    <form action="<?php echo $this->objURL->getCurrent('srch'); ?>" method="post">
 
         <table cellpadding="0" cellspacing="0" border="0" class="tbl_insert">
             <tr>
@@ -58,12 +58,12 @@
                             $orders = $objOrder->getClientOrders($user['id']);
                             if (empty($orders)) {
                         ?>
-                                <a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id')).'/action/remove/id/'.$user['id']; ?>">Remove</a>
+                                <a href="<?php echo $this->objURL->getCurrent(array('action', 'id')).'/action/remove/id/'.$user['id']; ?>">Remove</a>
                         <?php } else { ?>
                             <span class="inactive">Remove</span>
                         <?php } ?>
                     </td>
-                    <td class="ta_r"><a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id')).'/action/edit/id/'.$user['id']; ?>">Edit</a></td>
+                    <td class="ta_r"><a href="<?php echo $this->objURL->getCurrent(array('action', 'id')).'/action/edit/id/'.$user['id']; ?>">Edit</a></td>
                     </tr>
                 <?php } ?>
             </table>

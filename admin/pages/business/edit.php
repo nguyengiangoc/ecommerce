@@ -39,9 +39,9 @@
         	
         	if ($objValid->isValid()) {
             	if ($objBusiness->update($vars, Business::BUSINESS_ID)) {
-            	   Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
+            	   Helper::redirect($this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited')));
             	} else {
-            	   Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
+            	   Helper::redirect($this->objURL->getCurrent(array('action', 'id'), false, array('action', 'edited-failed')));
             	}
         	}
     	

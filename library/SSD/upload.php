@@ -12,7 +12,7 @@
             $this->_getUploads();
         }
         
-        private function getUploads() {
+        private function _getUploads() {
             if(!empty($_FILES)) {
                 foreach($_FILES as $key => $value) {
                     $this->_files[$key] = $value;

@@ -18,9 +18,9 @@
             $(document).on('click', thisIdentity, function(e) {
                 e.preventDefault();
                 var item = $(this).attr('rel');
-                $.post('/mod/call/basket-remove.php', { id : item }, function(data) {
-                    if(!systemObject.isEmpty(!data.replace_value)) {
-                        systemObject.replaceValues(data.replace_value);
+                $.post('/mod/call/basket-remove', { id : item }, function(data) {
+                    if(!systemObject.isEmpty(!data.replace_values)) {
+                        systemObject.replaceValues(data.replace_values);
                     }
                 }, 'json');
             });
@@ -33,7 +33,7 @@
                 var trigger = $(this);
                 var param = trigger.attr("rel");
                 var item = param.split("_");
-                $.post('/mod/call/basket.php', { id : item[0], job : item[1] }, function(data) {
+                $.post(root + '/mod/call/basket', { id : item[0], job : item[1] }, function(data) {
                     var new_id = item[0] + '_' + data.job;
                     if (data.job != item[1]) {
                         if (data.job == 0) {
@@ -45,8 +45,8 @@
                             trigger.text("Add to basket");
                             trigger.removeClass("red");
                         }
-                        if(!systemObject.isEmpty(data.replace_value)) {
-                            systemObject.replaceValues(data.replace_value);
+                        if(!systemObject.isEmpty(data.replace_values)) {
+                            systemObject.replaceValues(data.replace_values);
                         }
                     }
                 }, 'json');
@@ -65,9 +65,9 @@
             var thisArray = $('#frm_basket').serializeArray();
             
             
-            $.post('/mod/call/basket-qty.php', thisArray, function(data) {
-                if(!systemObject.isEmpty(data.replace_value)) {
-                    systemObject.replaceValues(data.replace_value);
+            $.post(root + '/mod/call/basket-qty', thisArray, function(data) {
+                if(!systemObject.isEmpty(data.replace_values)) {
+                    systemObject.replaceValues(data.replace_values);
                 }
             }, 'json');
             
@@ -98,7 +98,7 @@
         },
         
         send2PayPal : function(token) {
-            $.post('/mod/call/paypal', { token : token }, function(data) {
+            $.post(root + '/mod/call/paypal', { token : token }, function(data) {
                 if(data && !data.error) {
                     $('#frm_pp').html(data.form);
                     // submit form automatically
@@ -114,7 +114,7 @@
         shipping : function(thisIdentity) {
             $(document).on('change', thisIdentity, function(e) {
                 var thisOption = $(this).val();
-                $.getJSON('mod/call/summary-update/shipping/' + thisOption, function(data) {
+                $.getJSON(root + '/mod/call/summary-update/shipping/' + thisOption, function(data) {
                     if(data && !data.error) {
                         $('#basketSubTotal').html(data.totals.basketSubTotal);
                         $('#basketVAT').html(data.totals.basketVAT);

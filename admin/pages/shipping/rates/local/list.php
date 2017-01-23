@@ -7,7 +7,7 @@
 ?>
 <h1>Rates for : <?php echo $zone['name']; ?> : <?php echo $type['name']; ?></h1>
 
-<form method="post" class="ajax" data-action="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent('call', false, array('call', 'add')); ?>">
+<form method="post" class="ajax" data-action="<?php echo $this->objURL->getCurrent('call', false, array('call', 'add')); ?>">
     <table cellpadding="0" cellspacing="0" border="0" class="tbl_insert">
         <tr>
             <th><label for="weight" class="valid_weight">Weight up to: *</label></th>

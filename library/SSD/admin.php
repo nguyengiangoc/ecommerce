@@ -7,7 +7,7 @@
         public $id;
         
         private function _isEmailPasswordEmpty($email, $password) {
-            return (!empty($email) || !empty($password));
+            return (empty($email) || empty($password));
         }
         
         

@@ -8,14 +8,16 @@
     use SSD\Catalogue;
     use SSD\Helper;
 
-    Login::restrictFront($this->objURL);
+    $objLogin = new Login;
+    $objLogin->restrictFront($this->objURL);
+    
     $objUser = new User();
     $user = $objUser->getUser(Session::getSession(Login::$login_front));    
     if(!empty($user)) {
                               
         $objBasket = new Basket($user);
         
-        if(!$objBasket->empty_basket()) {
+        if(!$objBasket->empty_basket) {
             
             $objShipping = new Shipping($objBasket);
             $shipping = $objShipping->getShippingOptions($user);
@@ -94,7 +96,7 @@
                     </table>                
                     <div class="sbm sbm_blue fl_r paypal" id="<?php echo $token1; ?>"><span class="btn">Proceed to PayPal</span></div>
                     
-                    <div class="sbm sbm_blue fl_l"><a href="<?php echo BASE_PATH.'/'.$this->objURL->href('basket'); ?>" class="btn">Amend order</a></div>
+                    <div class="sbm sbm_blue fl_l"><a href="<?php echo $this->objURL->href('basket'); ?>" class="btn">Amend order</a></div>
                 </form>
                 <div class="dev">&#160;</div>
             

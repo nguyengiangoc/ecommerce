@@ -25,11 +25,11 @@
                     data-id="<?php echo $item['id']; ?>" value="<?php echo $item['name'] ?>"/>                
                 </td>
                 <td class="ta_r">
-                    <a href="#" data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'active', 'id', $item['id'])); ?>"
+                    <a href="#" data-url="<?php echo $data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'active', 'id', $item['id'])); ?>"
                     class="clickReplace"><?php echo $item['include'] == 1 ? 'Yes' : 'No'; ?></a>
                 </td>
                 <td class="ta_r">
-                    <a href="#" data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'remove', 'id', $item['id'])); ?>"
+                    <a href="#" data-url="<?php echo $data['objURL']->getCurrent(array('action', 'id'), false, array('action', 'remove', 'id', $item['id'])); ?>"
                     class="clickAddRowConfirm" data-span="3">Remove</a>
                 </td>
             </tr>

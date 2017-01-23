@@ -15,7 +15,7 @@
         }
         
         private function _isEmailPasswordEmpty($email, $password) {
-            return (!empty($email) || !empty($password));
+            return (empty($email) || empty($password));
         }
         
         public function isUser($email = null, $password = null) {
@@ -27,7 +27,7 @@
                 
                 if (!empty($result)) {
                     
-                    $this->_id = $result['id'];
+                    $this->id = $result['id'];
                     return true;
                     
                 }

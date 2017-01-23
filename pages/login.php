@@ -5,11 +5,12 @@
     use SSD\Form;
     use SSD\Validation;
     use SSD\User;
+    $objLogin = new Login;
     
     if(Login::isLogged(Login::$login_front)) {
     //kiem tra xem trong array session co attribute valid = 1  khong
     //kiem tra xem trong array session co attribute cid khong    
-        Helper::redirect(BASE_PATH.'/'.Login::$dashboard_front); 
+        Helper::redirect($objLogin->dashboard_front); 
         //neu da log in roi thi dua sang page order
     }
     
@@ -19,9 +20,12 @@
     
     if ($objForm->isPost('login_email')) {
         if($objUser->isUser($objForm->getPost('login_email'), $objForm->getPost('login_password'))) {
-            Login::loginFront($objUser->id, BASE_PATH.'/'.$this->objURL->href($this->objURL->get(Login::$referrer)));  
-            //neu tim thay thong tin ve email va password trong co so du lieu thi cho login, dua thong tin vao array session
-            //va dua ve trang trong referrer tren URl
+            
+            //var_dump($this->objURL->href($this->objURL->get(Login::$referrer)));
+            var_dump($objUser->id);
+           var_dump($objLogin->loginFront($objUser->id, $this->objURL->href($this->objURL->get(Login::$referrer))));  
+//            #//neu tim thay thong tin ve email va password trong co so du lieu thi cho login, dua thong tin vao array session
+//            #//va dua ve trang trong referrer tren URl
         } else {
             $objValid->add2Errors('login');
         }

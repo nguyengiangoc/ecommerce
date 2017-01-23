@@ -85,77 +85,50 @@
         
         
         private function _connect() {
-            
             $this->_setConnection();
-            
             try {
-                
-                
-                //$this->_pdoObject = new PDO('mysql:dbname=ecommerce;host=localhost:8080', 'root', , $this->_driverOptions);
-                
                 $this->_pdoObject = new PDO($this->_connectionString, $this->_username, $this->_password, $this->_driverOptions);
-                
             } catch (PDOException $e) {
-                
                 //echo $this->_exceptionOutput($e, 'There was a problem with the Database connection');
                 echo $e->getMessage();
             }
-            
         }
         
         private function _query($sql = null, $params = null) {
-            
             if(!empty($sql)) {
-                
                 if(!is_object($this->_pdoObject)) {
-                    
                     $this->_connect();
                 }
                 
                 $statement = $this->_pdoObject->prepare($sql, $this->_driverOptions);
                 
-                if(!$statement) {
-                    
+                if(!$statement) { 
                     $errorInfo = $this->_pdoObject->errorInfo();
-                    
                     throw new PDOException("Database error [{$errorInfo[0]}]: {$errorInfo[2]}, driver error code is {$errorInfo[1]}");
-                    
                 }
                 
                 $paramsConverted = array();
                 
                 if(get_magic_quotes_gpc() === true) {
-                    
                     if(is_array($params)) {
-                        
                         foreach ($params as $key => $value) {
-                            
                             $paramsConverted[$key] = stripcslashes($value);
-                            
                         }
-                        
                     } else {
-                        
                         $paramsConverted[] = stripcslashes($params); //keep the \n
-                        
                     }
-                    
                 } else {
-                    
                     $paramsConverted = is_array($params) ? $params : array($params);
-                    
                 }
                 
                 if(!$statement->execute($paramsConverted) || $statement->errorCode() != '00000') {
                     
                     $errorInfo = $statement->errorInfo();
-                    
                     throw new PDOException("Database error [{$errorInfo[0]}]: {$errorInfo[2]}, driver error code is {$errorInfo[1]}<br />SQL: {$sql}");
                     
                 }
                 
                 $this->affected_rows = $statement->rowCount();
-                
                 return $statement;
                 
             }
@@ -163,76 +136,48 @@
         }
         
         public function setFetchMode($fetchMode = null) {
-            
             if(!empty($fetchMode)) {
                 $this->_fetchMode = $fetchMode;
-            }
-            
+            }   
         }
         
-        public function getLastInsertId($sequenceName = null) {
-            
+        public function getLastInsertId($sequenceName = null) { 
             return $this->_pdoObject->lastInsertId($sequenceName);
-            
         }
         
         public function fetchAll($sql = null, $params = null) {
-            
             if(!empty($sql)) {
-                
                 try {
-                    
                     $statement = $this->_query($sql, $params);
                     return $statement->fetchAll($this->_fetchMode);
-                    
                 } catch (PDOException $e) { 
-                    
                     echo $this->_exceptionOutput($e, 'Something went wrong trying to fetch records');
                 }
-                
             }
-            
             return false;
-            
         }
         
         public function fetchOne ($sql = null, $params = null) {
-            
             if(!empty($sql)) {
-                
                 try {
-                    
                     $statement = $this->_query($sql, $params);
                     return $statement->fetch($this->_fetchMode);
-                    
                 } catch (PDOException $e) { 
-                    
                     echo $this->_exceptionOutput($e, 'Something went wrong trying to fetch records');
                 }
-                
             }
-            
             return false;
-            
         }
         
         public function execute ($sql = null, $params = null) {
-            
             if(!empty($sql)) {
-                
                 try {
-                    
                     return $this->_query($sql, $params);
-                    
                 } catch (PDOException $e) { 
-                    
                     echo $this->_exceptionOutput($e, 'Something went wrong when executing the sql statement');
                 }
-                
             }
-            
             return false;
-            
         }
         
         private function _insertArray($array = null, $pre = null) {
@@ -305,16 +250,13 @@
         }
         
         private function _areUpdateParamsValid($table = null, $array = null, $value = null, $field = null) {
-            
             return !empty($table) && !empty($array) && !Helper::isEmpty($value) && !empty($field);
-            
         }
         
         public function update($table = null, $array = null, $value = null, $field = 'id') {
             
             $array = $this->_updateArray($array);
-            
-            if($this->_areUpdateParamsValid($table, $array, $value, $field)) {
+            if($this->_areUpdateParamsValid($table, $array, $value, $field)) {  
                 
                 $sql = "UPDATE `{$table}` SET ";
                 $sql .= implode(", ", $array[0]);
@@ -322,12 +264,11 @@
                 
                 $array[1][] = $value;
                 
-                $return = $this->execute($sql, $array[1]);
+                return $this->execute($sql, $array[1]);
                 
+                //return $this->execute($sql, $array[1]);    
             }
-            
             return false;
-            
         }
         
         

@@ -126,7 +126,6 @@
         }
         
         public function updateProduct($params = null, $id = null) {
-
             return $this->_Db->update($this->_table_2, $params, $id);
             
         }

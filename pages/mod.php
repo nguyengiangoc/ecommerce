@@ -1,7 +1,6 @@
 <?php
 
     use SSD\Helper;
-    use \Exception;
     
     
     $call = $this->objURL->get('call');

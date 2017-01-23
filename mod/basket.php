@@ -1,5 +1,11 @@
 <?php
-    require_once('../inc/config.php');
+
+    use SSD\Catalogue;
+    use SSD\Session;
+    use SSD\Helper;
+    use SSD\Basket;
+
+    require_once('inc/config.php');
     if(isset($_POST['job']) && isset($_POST['id'])) {
         $out = array();
         $job = $_POST['job'];
@@ -21,6 +27,15 @@
                 //$out = 0;
                 break;
             }
+            
+            $objBasket = new Basket();
+            
+            $out['replace_values'] = array();
+            
+            $out['replace_values']['.bl_ti'] = $objBasket->number_of_items;
+            $out['replace_values']['.bl_st'] = $this->objCurrency->display(number_format($objBasket->sub_total, 2));
+            $out['replace_values']['.bl_we'] = $objBasket->weight;
+            
             
             //echo json_encode($out);
             echo Helper::json($out) ;

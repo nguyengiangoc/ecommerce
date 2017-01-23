@@ -2,6 +2,7 @@
 
     use SSD\Login;    
     Login::logout(Login::$login_admin);
-    Login::restrictAdmin();
+    $objLogin = new Login;
+    $objLogin->restrictAdmin();
 
 ?>

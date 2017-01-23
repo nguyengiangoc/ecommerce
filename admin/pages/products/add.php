@@ -44,13 +44,13 @@
                     if($objUpload->upload(CATALOGUE_PATH)) {
                         $objCatalogue->updateProduct(array('image' => $objUpload->names[0]), $objCatalogue->id);
                         //neu upload duoc anh thanh cong thi cho duong dan cua anh vao trong database
-                        Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array(action, id), false, array('action', 'added')));
+                        Helper::redirect($this->objURL->getCurrent(array(action, id), false, array('action', 'added')));
                         //tuc la lay phan param page=products, bo cai action=add, id=bao nhieu day
                     } else {
-                        Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array(action, id), false, array('action', 'added-no-upload')));
+                        Helper::redirect($this->objURL->getCurrent(array(action, id), false, array('action', 'added-no-upload')));
                     }
                 } else {
-                    Helper::redirect(BASE_PATH.'/'.$this->objURL->getCurrent(array(action, id), false, array('action', 'added-failed')));
+                    Helper::redirect($this->objURL->getCurrent(array(action, id), false, array('action', 'added-failed')));
                 }
             }
             

@@ -19,11 +19,11 @@
                             <div class="textSmall"><?php echo $item['post_codes']; ?></div>
                         </td>
                         <td class="ta_r">
-                            <a href="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent(
+                            <a href="<?php echo $data['objURL']->getCurrent(
                             array('action', 'id'), false, array('action', 'codes', 'id', $item['id'])); ?>">Post code</a>
                         </td>
                         <td class="ta_r">
-                            <a href="#" class="clickAddRowConfirm" data-url="<?php echo BASE_PATH.'/'.$data['objURL']->getCurrent(
+                            <a href="#" class="clickAddRowConfirm" data-url="<?php echo $data['objURL']->getCurrent(
                             array('action', 'id'), false, array('action', 'remove', 'id', $item['id'])); ?>" data-span="3">Remove</a>
                         </td>
                     </tr>

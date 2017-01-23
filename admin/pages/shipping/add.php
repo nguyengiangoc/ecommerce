@@ -16,7 +16,7 @@
         if($objValid->isValid()) {
             if($objShipping->addType($objValid->post)) {
                 $replace = array();
-                $urlSort = BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'id'), false, array('action', 'sort'));
+                $urlSort = $this->objURL->getCurrent(array('action', 'id'), false, array('action', 'sort'));
                 if(!empty($objValid->post['local'])) {
                     $rows = $objShipping->getTypes(1);
                     $zones = $objShipping->getZones();

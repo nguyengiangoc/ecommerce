@@ -9,9 +9,9 @@
     if(isset($_POST['srch'])) {
         
         if(!empty($_POST['srch'])) {
-            $url = BASE_PATH.'/'.$this->objURL->getCurrent('srch').'/srch/'.urlencode(stripslashes(str_replace('/','',$_POST['srch'])));
+            $url = $this->objURL->getCurrent('srch').'/srch/'.urlencode(stripslashes(str_replace('/','',$_POST['srch'])));
         } else {
-            $url = BASE_PATH.'/'.$this->objURL->getCurrent('srch');
+            $url = $this->objURL->getCurrent('srch');
         }
         Helper::redirect($url);
         
@@ -30,7 +30,7 @@
         require_once('_header.php');
 ?>
 <h1>Products</h1>
-<form action="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent('srch'); ?>" method="post">
+<form action="<?php echo $this->objURL->getCurrent('srch'); ?>" method="post">
     <table cellpadding="0" cellspacing="0" border="0" class="tbl_insert">
         <tr>
             <th><label for="srch">Product:</label></th>
@@ -40,7 +40,7 @@
     </table>
 </form>
 <div class="dev br_td">&#160;</div>
-<p><a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent('action').'/action/add'; ?>">New product</a></p>
+<p><a href="<?php echo $this->objURL->getCurrent('action').'/action/add'; ?>">New product</a></p>
     <?php 
         if(!empty($rows)) { 
     ?>
@@ -55,8 +55,8 @@
         <tr>
             <td><?php echo $product['id']; ?></td>
             <td><?php echo Helper::encodeHTML($product['name']); ?></td>
-            <td class="ta_r"><a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'srch')).'/action/remove/id/'.$product['id']; ?>">Remove</a></td>
-            <td class="ta_r"><a href="<?php echo BASE_PATH.'/'.$this->objURL->getCurrent(array('action', 'srch')).'/action/edit/id/'.$product['id']; ?>">Edit</a></td>
+            <td class="ta_r"><a href="<?php echo $this->objURL->getCurrent(array('action', 'srch')).'/action/remove/id/'.$product['id']; ?>">Remove</a></td>
+            <td class="ta_r"><a href="<?php echo $this->objURL->getCurrent(array('action', 'srch')).'/action/edit/id/'.$product['id']; ?>">Edit</a></td>
         </tr>
         <?php } ?>
     </table>

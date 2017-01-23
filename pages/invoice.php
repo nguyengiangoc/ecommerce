@@ -6,7 +6,9 @@
     use SSD\Business;
     
 
-    Login::restrictFront($this->objURL);
+    $objLogin = new Login;
+    $objLogin->restrictFront($this->objURL);
+    
     $token = $this->objURL->get('token');
     if(!empty($token)) {
         $objOrder = new Order();
